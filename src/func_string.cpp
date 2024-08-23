@@ -1,5 +1,6 @@
 #include "func_string.h"
 
+string DIGITS = "0123456789";
 
 string opt_menu(){
   string opt;
@@ -10,6 +11,10 @@ string opt_menu(){
   cout << "5.Calcular f(x)=5x*x+1/x\n" << endl;
   cout << "Ingrese opcion: ";
   cin >> opt;
+  if(opt.empty() || opt.find_first_not_of(DIGITS) != string::npos){
+    cout << "No es un numero, Ingrese una de las opciones" << endl;
+    return opt_menu();
+  }
   return opt;
 }
 
@@ -18,10 +23,11 @@ vector<int> split_num(string s, string separator){
     vector<int> values = {};
     size_t pos = 0; //size_t = maximo tamaño posible de cualquier objeto
     string temp;
-    while(pos = s.find(separator) != string::npos){//npos = valor que representa el ultimo numero de size_t, find devuelve la posicion donde primero encuentra una coincidencia
+    while((pos = s.find(separator)) != string::npos){//npos = valor que representa el ultimo numero de size_t, find devuelve la posicion donde primero encuentra una coincidencia
         temp = s.substr(0,pos);
-        values.push_back(stoi(temp)); 
+        values.push_back(stoi(temp));
         s.erase(0, pos + separator.length());
+        
     }
     values.push_back(stoi(s));
 
