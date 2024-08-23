@@ -6,6 +6,7 @@
 #include <string.h>
 using namespace std;
 
+bool check_num(string num);
 string opt_menu();
 vector<int> split_num(string s, string separate);
 

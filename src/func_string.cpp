@@ -1,7 +1,16 @@
 #include "func_string.h"
 
-string DIGITS = "0123456789";
+string DIGITS = "0123456789,";
 
+//Chekea si el valor ingresado es un numero
+bool check_num(string num){
+  if(num.empty() || num.find_first_not_of(DIGITS) != string::npos){
+    return false;
+  }
+  return true;
+}
+
+//Menu del programa
 string opt_menu(){
   string opt;
   cout << "1.Detectar Palindrome" << endl;
