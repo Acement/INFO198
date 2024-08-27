@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char** argv){
   int c = 0, opt = 0;
   float numf;
-  string user = "", password = "", text_in = "", num = "";
+  string user = "", password = "", textIn = "", num = "", checkYN;
   vector<int>num_vect = {};
   bool check = false;
 
@@ -22,7 +22,7 @@ int main(int argc, char** argv){
         password = optarg;
       break;
       case 't':
-        text_in = optarg;
+        textIn = optarg;
       break;
       case 'v':
         num_vect = split_num(optarg,";");
@@ -41,6 +41,11 @@ int main(int argc, char** argv){
     switch(opt){
       case 1:
         cout << "Opcion 1" << endl;
+        if(check_pali(textIn)){
+          cout << "'" << textIn <<"' es palindrome" << endl;
+        }else{
+          cout << "'" << textIn <<"' no es palindrome" << endl;
+        }
         check = true;
       break;
       case 2:
@@ -70,8 +75,9 @@ int main(int argc, char** argv){
         cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
       break;
     }
-    
+    cout << "\n¿Desea realizar otra operacion? (Y/N): ";
 
+    
   }
 
 
