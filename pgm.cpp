@@ -2,13 +2,15 @@
 
 #include "func_math.h"
 #include "func_string.h"
+#include "common.h"
 
 using namespace std;
+
 
 int main(int argc, char** argv){
   int c = 0, opt = 0;
   float numf;
-  string user = "", password = "", textIn = "", num = "", checkYN;
+  string user = "", password = "", textIn = "", num = "", yesno;
   vector<int>num_vect = {};
   bool check = false;
 
@@ -46,19 +48,24 @@ int main(int argc, char** argv){
         }else{
           cout << "'" << textIn <<"' no es palindrome" << endl;
         }
-        check = true;
       break;
       case 2:
         cout << "Opcion 2" << endl;
-        check = true;
+        cout << "'" << textIn << "' tiene " << count_symbols(textIn,VOCALS) << " vocales" << endl;
       break;
       case 3:
         cout << "Opcion 3" << endl;
-        check = true;
+        cout << "'" << textIn << "' tiene " << count_symbols(textIn,LETTERS) << " letras" << endl;
       break;
       case 4:
         cout << "Opcion 4" << endl;
-        check = true;
+        cout << "Vector: ";
+        for (int i : num_vect){
+          cout << i << " ";
+        }
+        cout << endl;
+        cout << "La sumatoria es: " << summation(num_vect) << endl;
+        cout << "El promedio es: " << average(num_vect) << endl;
       break;
       case 5:
         cout << "Opcion 5" << endl;
@@ -69,18 +76,20 @@ int main(int argc, char** argv){
           numf = calc_func(stoi(num));
           cout << "El resultado es: " << numf << endl;
         }
-        check = true;
       break;
       default:
         cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
       break;
     }
     cout << "\n¿Desea realizar otra operacion? (Y/N): ";
-
-    
+    cin >> yesno;
+    yesno = check_yesno(yesno);
+    if (yesno == "n" || yesno == "N") {
+      cout << "\nCerrando programa...\n" << endl;
+      check = true;
+    }else{
+      cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
+    }
   }
-
-
-
   return 0;
 }

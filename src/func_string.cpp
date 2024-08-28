@@ -1,6 +1,5 @@
 #include "func_string.h"
-
-string DIGITS = "0123456789,";
+#include "common.h"
 
 //Chekea si el valor ingresado es un numero
 bool check_num(string num){
@@ -21,10 +20,19 @@ string opt_menu(){
   cout << "Ingrese opcion: ";
   cin >> opt;
   if(opt.empty() || opt.find_first_not_of(DIGITS) != string::npos){
-    cout << "No es un numero, Ingrese una de las opciones" << endl;
+    cout << "No es un numero, Ingrese una de las opciones\n" << endl;
     return opt_menu();
   }
   return opt;
+}
+
+//Chekea si se ingreso de forma correcta Y/N o y/n
+string check_yesno(string s){
+  while(s != "Y" && s != "y" && s != "N" && s != "n" ){
+    cout << "Error! Ingrese (Y/N) o (y/n): ";
+    cin >> s;
+  }
+  return s;
 }
 
 //Toma el string de numeros separado por ";" y devuelve un vector que contiene los numeros separados
@@ -43,6 +51,15 @@ vector<int> split_num(string s, string separator){
     return values;
 }
 
+int count_symbols(string s, string filter){
+  int count = 0;
+  for(int i = 0; i < s.size(); i++){
+    if (filter.find(s[i]) != string::npos) count++;
+  }
+  return count;
+}
+
+//Checkea si el string ingresado es palidrome
 bool check_pali(string s){
   for(int i = 0; i < s.size(); i++ ){
     if(s[i] != s[(s.size()-1)-i]){
