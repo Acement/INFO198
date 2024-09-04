@@ -11,21 +11,21 @@ Este programa fue creado usando C++.
 * git 2.34.1 o superior
 
 ## Instalación
-* En la carpeta donde se desea guarda el programa, abrir la terminal y ejecutar el siguiente comando git:
+En la carpeta donde se desea guarda el programa, abrir la terminal y ejecutar el siguiente comando git:
 
 ```git clone https://github.com/Acement/INFO198.git```
 
-* Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguiente comando:
+Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguiente comando:
 
 ```cd INFO198/```
 
-* Por ultimo compilar el programa con el siguiente comando:
+Por ultimo compilar el programa con el siguiente comando:
 
 ```g++ -I./include -o prog ./src/*.cpp INFO198_SO.cpp```
 
 ## Ejecucion
 
-* Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este y ingresar el siguiente comando:
+Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este y ingresar el siguiente comando:
 
 ```./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>```
 
@@ -37,7 +37,7 @@ Este programa fue creado usando C++.
 | v | Especifica un vector de numeros |
 | n | Especifica un numero entero |
 
-* ---Precaucion--- 
+---Precaucion--- 
 t y v necesitan ingresarse con comillas
 
 ## Funciones
