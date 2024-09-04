@@ -19,17 +19,23 @@ En la carpeta donde se desea guarda el programa, abrir la terminal y ejecutar el
 
 Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguiente comando:
 
-```cd INFO198/```
+```cmd
+  cd INFO198/
+```
 
 Por ultimo compilar el programa con el siguiente comando:
 
-```g++ -I./include -o prog ./src/*.cpp INFO198_SO.cpp```
+```cmd
+  g++ -I./include -o prog ./src/*.cpp INFO198_SO.cpp
+```
 
 ## Ejecucion
 
 Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este y ingresar el siguiente comando:
 
-```./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>```
+```cmd
+  ./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>
+```
 
 | Argumento | Descripcion |
 | -------- | ----------- |
@@ -44,8 +50,4 @@ t y v necesitan ingresarse con comillas
 
 ## Funciones
 
-Compilacion
-g++ -I./include -o prog ./src/*.cpp pgm.cpp
 
-Ejecucion
-./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>
