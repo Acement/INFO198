@@ -1,8 +1,7 @@
 #ifndef FUNC_MATH_H
 #define FUNC_MATH_H
 
-#include <iostream>
-#include <vector>
+#include "common.h"
 
 using namespace std;
 
