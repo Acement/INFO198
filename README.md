@@ -13,7 +13,9 @@ Este programa fue creado usando C++.
 ## Instalación
 En la carpeta donde se desea guarda el programa, abrir la terminal y ejecutar el siguiente comando git:
 
-```git clone https://github.com/Acement/INFO198.git```
+```cmd 
+  git clone https://github.com/Acement/INFO198.git
+```
 
 Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguiente comando:
 
