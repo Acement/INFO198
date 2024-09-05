@@ -50,4 +50,24 @@ t y v necesitan ingresarse con comillas
 
 ## Funciones
 
+* Ingreso de usuarios:
+El programa puede ingresar Usuarios y contraseñas, con lo cual puede aceptar o negar el ingreso al Sistema
+
+* Menu:
+El programa muestra un menu con opciones donde se puede elegir acciones dependiendo de la entrada de valores
+
+* Detectar Palindrome:
+El programa verifica si el texto ingresado por el usuario es un palindome
+
+* Contar Vocales:
+El programa puede contar las vocales dentro de el texto ingresado por el usuario
+
+* Contar Letras:
+El programa puede contar las letras dentro de el texto ingresado por el usuario
+
+* Promedio y sumatoria de un vector:
+El programa puede calcular la sumatoria y el promedio de un vector ingresado por el usuario
+
+* Calcular Funcion:
+El programa puede calcular el resulta de una funcion usando un numer ingresado por el usuario
 

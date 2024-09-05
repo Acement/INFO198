@@ -30,7 +30,7 @@ string opt_menu(){
   cout << "1.Detectar Palindrome" << endl;
   cout << "2.Contar Vocales" << endl;
   cout << "3.Contar letras en un texto" << endl;
-  cout << "4.Promedio y sumatoria de un vector" << endl;
+  cout << "4.Sumatoria y promedo de un vector" << endl;
   cout << "5.Calcular f(x)=5x*x+1/x" << endl;
   cout << "6.Salir\n" << endl;
   cout << "Ingrese opcion: ";
