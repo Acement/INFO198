@@ -8,7 +8,7 @@ using namespace std;
 bool check_login(string user, string password);
 
 bool check_num(string num);
-string opt_menu();
+string opt_menu(string user, bool admin);
 bool check_empty(string s);
 vector<int> split_num(string s, string separate);
 string text_normalization(string s);

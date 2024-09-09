@@ -1,20 +1,6 @@
-#include "func_string.h"
 #include "common.h"
+#include "func_string.h"
 
-//Checkea si las credenciales ingresadas son correctas
-bool check_login(string user, string password){
-  if (user.size() < 3 || user != TEMP_USER || count_symbols(user,LETTERS) < user.size()){
-    cout << "ERROR!, Usuario o contraseña incorrectos\n" << endl;
-    return false;
-  }else if (password.size() < 8 || password != TEMP_PASSWORD || (count_symbols(password,DIGITS) + count_symbols(password,LETTERS)) < password.size() ||(count_symbols(password,DIGITS) + count_symbols(password,LETTERS)) < 6){
-    cout << "ERROR!, Usuario o contraseña incorrectos\n" << endl;
-    return false;
-  }else{
-    cout << "Bienvenido " << user << ", elija una de las siguientes opciones\n" << endl;
-    return true;
-  } 
-  
-}
 
 //Chekea si el valor ingresado es un numero
 bool check_num(string num){
@@ -25,23 +11,40 @@ bool check_num(string num){
 }
 
 //Menu del programa
-string opt_menu(){
+string opt_menu(string user, bool admin){
   string opt;
+  print_separation();
+  cout << "SISTEMA " << getpid() << endl;
+  cout << "Usuario: " << user <<endl;
+  if(admin){//Para imprimir el rol, mira si es admin o no
+    cout << "Rol: Admin" << endl;
+  }
+  else{
+    cout << "Rol: Usuario generico" << endl;
+  }
+
+  print_separation();
   cout << "1.Detectar Palindrome" << endl;
   cout << "2.Contar Vocales" << endl;
   cout << "3.Contar letras en un texto" << endl;
   cout << "4.Sumatoria y promedo de un vector" << endl;
   cout << "5.Calcular f(x)=5x*x+1/x" << endl;
-  cout << "6.Salir\n" << endl;
+  if(admin){
+    cout << "\n98.Lista de Usuarios" << endl;
+    cout << "99.Ingresar Usuario" << endl;
+    cout << "100.Elimunar Usuario" << endl;
+  }
+  cout << "\n0.Salir\n" << endl;
   cout << "Ingrese opcion: ";
   cin >> opt;
   if(opt.empty() || opt.find_first_not_of(DIGITS) != string::npos){
     cout << "No es un numero, Ingrese una de las opciones\n" << endl;
-    return opt_menu();
+    return opt_menu(user, admin);
   }
   return opt;
 }
 
+//Checkea si la entrada es vacia
 bool check_empty(string s){
   if(s.size() == 0) return true;
   return false;
@@ -63,6 +66,7 @@ vector<int> split_num(string s, string separator){
     return values;
 }
 
+//Cuenta los simbolos en un string comparandolos con un string filtro
 int count_symbols(string s, string filter){
   int count = 0;
   for(int i = 0; i < s.size(); i++){

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -13,5 +15,6 @@ static string LETTERS = "abcdefghijklmnñopqrstuvwxyzABCDEFGHYJKLMNÑOPQRSTUVWXY
 
 static string TEMP_USER = "usuario";
 static string TEMP_PASSWORD = "contraseña";
+static bool ADMIN = true;
 
 #endif
