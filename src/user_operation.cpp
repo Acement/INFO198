@@ -6,8 +6,9 @@
 bool check_login(string user, string password, bool* admin){
   vector<tuple<string,string,string>> userVector = {};
   userVector = get_users(USERFILEPATH);
-  for(tuple<string,string,string> i : userVector){
-    cout <<"Usuario: " << get<0>(i) << endl;
+  int j = 0;
+  for(tuple<string,string,string> i : userVector){ //Imprime la lista de los ususrios (test)
+    cout <<"Usuario " << j << ": " << get<0>(i) << endl;
     cout <<"Contraseña: " << get<1>(i) << endl;
     cout <<"Rol: ";
     if(get<2>(i) == "admin" ){
@@ -17,6 +18,7 @@ bool check_login(string user, string password, bool* admin){
     else{
       cout << get<2>(i) << endl;
     }
+    j++;
   }
   if (user.size() < 3 || user != TEMP_USER || count_symbols(user,LETTERS) < user.size()){
     cout << "ERROR!, Usuario o contraseña incorrectos\n" << endl;
@@ -32,6 +34,7 @@ bool check_login(string user, string password, bool* admin){
   
 }
 
+//Saca los usuarios y sus respectivos elementos del archivo
 vector<tuple<string,string,string>> get_users(string fileName){
   vector<tuple<string,string,string>> userVector = {}; 
 
