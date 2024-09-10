@@ -1,8 +1,9 @@
 #include <unistd.h>
 
+#include "user_operation.h"
+#include "file_operation.h"
 #include "func_math.h"
 #include "func_string.h"
-#include "login.h"
 #include "common.h"
 
 using namespace std;
@@ -152,6 +153,7 @@ int main(int argc, char** argv){
   
   check = check_login(userIn,passwordIn,&admin);
   cout << admin << endl;
+  
   //read_User
   execute(check,textIn,numVect,num,userIn,ADMIN);
 

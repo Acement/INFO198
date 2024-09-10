@@ -1,6 +1,0 @@
-user:
-pass:
-text:
-numVect:
-num:
-isAdmin:

@@ -50,7 +50,7 @@ bool check_empty(string s){
   return false;
 }
 
-//Toma el string de numeros separado por ";" y devuelve un vector que contiene los numeros separados
+//Toma el string de numeros separado por un separador y devuelve un vector que contiene los numeros separados
 vector<int> split_num(string s, string separator){
     vector<int> values = {};
     size_t pos = 0; //size_t = maximo tamaño posible de cualquier objeto
@@ -65,6 +65,22 @@ vector<int> split_num(string s, string separator){
 
     return values;
 }
+
+vector<string> split(string s, string separator){
+  vector<string> splitedVector = {};
+  size_t pos = 0;
+  string temp;
+  if (s[s.size()-1] == separator[0]) s.erase(s.size()-1);
+  while((pos = s.find(separator)) != string::npos){
+    temp = s.substr(0,pos);
+    splitedVector.push_back(temp);
+    s.erase(0,pos + separator.length());
+  }
+  splitedVector.push_back(s);
+
+  return splitedVector;
+}
+
 
 //Cuenta los simbolos en un string comparandolos con un string filtro
 int count_symbols(string s, string filter){

@@ -1,0 +1,2 @@
+Usuario1,contraseña,admin
+Usuario2,password,genuser
