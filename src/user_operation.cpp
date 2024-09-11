@@ -64,3 +64,55 @@ vector<tuple<string,string>> get_user_list(string fileName){
 
   return userVector;
 }
+
+void add_user(){
+  string newUser = "";
+  string user, password, temp, role;
+  bool check;
+  vector<tuple<string,string>> userVector = get_user_list(USERFILEPATH);
+  do{
+    cout << "Insgrese nombre de usuario nuevo (Tamaño minimo: 3, Solo letras): ";
+    cin >> user;
+    if(user.size() < 3 ||  count_symbols(user,LETTERS) < user.size()){
+      cout << "Error! Nombre de usuario ingresado no cumple con condiciones" << endl;
+      check = false;
+    }
+    else check = true;
+  }while(!check);
+
+  do{
+    cout << "Ingrese contraseña: ";
+    cin >> password;
+    if (password.size() < 8 || (count_symbols(password,DIGITS) + count_symbols(password,LETTERS)) < password.size() ||(count_symbols(password,DIGITS) + count_symbols(password,LETTERS)) < 6){//Chequea que la contraseña tenga 8 o mas simbolos y que no existan caracteres especiales
+      cout << "ERROR! contraseña no cumple con requisitos" << endl;
+      check = false;
+    }
+    else check = true;
+  }while(!check);
+  do{
+    cout <<"1.-Admin\n2.-Usuario generico" << endl;
+    cout << "Ingrese rol(Numero de la opcion):";
+    cin >> temp;
+    if(temp == "1"){
+      role = "admin";
+      check = true;
+    } 
+    else if(temp == "2") {
+      role = "genuser";
+      check = true;
+    } 
+    else{
+      cout << "ERROR! se ingreso opcion no aceptada" << endl;
+      check = false;
+    }
+  }while(!check);
+  for (tuple<string,string> i : userVector){
+    if (get<0>(i) == user){
+      cout << "ERROR! usuario ya se encuentra en la lista" << endl;
+      return;
+    }
+  }
+  newUser = user + "," + password + "," + role;
+  
+  add_line_to_file(USERFILEPATH,newUser);
+}

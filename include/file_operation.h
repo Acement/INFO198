@@ -4,7 +4,7 @@
 #include "common.h"
 
 vector<string> read_file(string fileName);
-void edit_file();
+void add_line_to_file(string fileName, string line);
 
 
 #endif

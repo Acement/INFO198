@@ -1,4 +1,3 @@
 UsuarioA,contraseña,admin
 UsuarioB,password,genuser
-UsuarioC,12345678,genuser
-UserD,87654321,admin,
+UserC,12345678,genuser

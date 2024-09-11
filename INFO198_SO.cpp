@@ -106,6 +106,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 99:
           print_separation();
           cout << "Opcion 99\n" << endl; 
+          add_user();
         break;
         //100.Eliminar Usuario
         case 100:
