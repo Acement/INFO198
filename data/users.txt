@@ -1,2 +1,4 @@
-Usuario1,contraseña,admin
-Usuario2,password,genuser
+UsuarioA,contraseña,admin
+UsuarioB,password,genuser
+UsuarioC,12345678,genuser
+UserD,87654321,admin,

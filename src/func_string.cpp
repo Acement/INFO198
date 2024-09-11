@@ -115,6 +115,19 @@ string text_normalization(string s){
   }
   return s;
 }
+
+void print_user_list(vector<tuple<string,string>> userVector){
+  int j = 0;
+  for (tuple<string,string> i : userVector){
+    cout << "Usuario " << j << ": " << get<0>(i) << endl;
+    cout << "Rol : ";
+    if(get<1>(i) == "admin") cout << "Admin" << endl;
+    else if(get<1>(i) == "genuser") cout << "Usuario Generico" << endl;
+    else cout << "No definido" << endl;
+    cout << endl;
+    j++;
+  }
+}
 //Impriem una linea para separar las ejecuciones del sistema
 void print_separation(){
   cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" << endl;

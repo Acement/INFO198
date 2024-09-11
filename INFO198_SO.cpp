@@ -100,6 +100,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 98:
           print_separation();
           cout << "Opcion 98\n" << endl; 
+          print_user_list(get_user_list(USERFILEPATH));
         break;
         //99.Ingresar usuario
         case 99:
@@ -128,7 +129,8 @@ int main(int argc, char** argv){
   int c = 0;
   float numf;
   string userIn = "", passwordIn = "", textIn = "", num = "" , numVect= "";
-  bool check ,admin = false;
+  bool check ;
+  bool admin = false;
 
 //Toma los valores de entrada
   while((c=getopt(argc,argv,"u:p:t:v:n:"))!=-1){
@@ -155,7 +157,7 @@ int main(int argc, char** argv){
   cout << admin << endl;
   
   //read_User
-  execute(check,textIn,numVect,num,userIn,ADMIN);
+  execute(check,textIn,numVect,num,userIn,admin);
 
   cout << "Cerrando programa...\n" << endl;
   return 0;

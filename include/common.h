@@ -16,8 +16,5 @@ static string LETTERS = "abcdefghijklmnñopqrstuvwxyzABCDEFGHYJKLMNÑOPQRSTUVWXY
 
 static string USERFILEPATH = "./data/users.txt";
 
-static string TEMP_USER = "usuario";
-static string TEMP_PASSWORD = "contraseña";
-static bool ADMIN = true;
 
 #endif
