@@ -26,7 +26,7 @@ Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguien
 Por ultimo compilar el programa con el siguiente comando:
 
 ```cmd
-  g++ -I./include -o prog ./src/*.cpp INFO198_SO.cpp
+  make
 ```
 
 ## Ejecucion
@@ -52,6 +52,12 @@ t y v necesitan ingresarse con comillas
 
 * Ingreso de usuarios:
 El programa puede ingresar Usuarios y contraseñas, con lo cual puede aceptar o negar el ingreso al Sistema
+
+* Listar Usuarios:
+El programa puede mostrar una lista de los usuarios que estan dentro de la base de datos
+
+* Eliminar Usuarios:
+El programa puede eliminar usuarios dentro de la base de datos, no se pueden eliminar usuarios administradores
 
 * Menu:
 El programa muestra un menu con opciones donde se puede elegir acciones dependiendo de la entrada de valores
