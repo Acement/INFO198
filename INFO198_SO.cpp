@@ -111,7 +111,8 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         //100.Eliminar Usuario
         case 100:
           print_separation();
-          cout << "Opcion 100\n" << endl; 
+          cout << "Opcion 100\n" << endl;
+          erase_user();
         break;
         //0.Salir
         case 0:
@@ -155,9 +156,6 @@ int main(int argc, char** argv){
   }
   
   check = check_login(userIn,passwordIn,&admin);
-  cout << admin << endl;
-  
-  //read_User
   execute(check,textIn,numVect,num,userIn,admin);
 
   cout << "Cerrando programa...\n" << endl;

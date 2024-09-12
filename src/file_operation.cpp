@@ -13,7 +13,18 @@ vector<string> read_file(string fileName){
 }
 void add_line_to_file(string fileName, string line){
     fstream myFile;
-    myFile.open(USERFILEPATH,ios::app);
-    myFile << "\n" + line;
+    myFile.open(fileName,ios::app);
+    myFile << line + "\n";
     myFile.close();
+}
+
+void erase_lines(string fileName, vector<string> fileIn){
+    ofstream myFile;
+    myFile.open(fileName,ofstream::out | ofstream::trunc);
+    myFile.close();
+
+    for(string i : fileIn){
+        add_line_to_file(fileName,i);
+    }
+
 }

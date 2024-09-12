@@ -116,6 +116,7 @@ string text_normalization(string s){
   return s;
 }
 
+//Muestra la lista de los usuarios
 void print_user_list(vector<tuple<string,string>> userVector){
   int j = 0;
   for (tuple<string,string> i : userVector){

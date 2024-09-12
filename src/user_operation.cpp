@@ -116,3 +116,48 @@ void add_user(){
   
   add_line_to_file(USERFILEPATH,newUser);
 }
+
+void erase_user(){
+  bool check = false;
+  string temp, user;
+  do{
+    cout << "Se va a eliminar un usuario, ¿Esta seguro?(Y/N): ";
+    cin >> temp;
+    if (temp != "Y" && temp != "N" && temp != "y" && temp != "n"){
+      cout << "ERROR! no se ingreso la opcion correcta" << endl;
+    }
+    else check = true;
+  }while(!check);
+  if(temp == "Y" || temp == "y"){
+
+    vector<string> read = read_file(USERFILEPATH);
+    vector<string> tempUser = {};
+    vector<string> fileIn = {};
+    bool check = true;
+
+    cout << "Ingrese nombre de usuario: ";
+    cin >> user;
+
+    for (string i : read){
+      tempUser = split(i,",");
+      if(user == tempUser[0]){
+        if(tempUser[2] == "admin"){
+          cout << "\nNo se pudo eliminar usuario" << endl;
+          check = false;
+          break;
+        }
+      }
+      else{
+        fileIn.push_back(i);
+      }
+    }
+    if(check){
+      if(fileIn.size() == read.size()) cout << "\nNo se encontro Usuario" << endl;
+      else {
+        erase_lines(USERFILEPATH,fileIn);
+        cout << "\nSe elimino Usuario " << user << endl; 
+      }
+    }
+
+  }
+}
