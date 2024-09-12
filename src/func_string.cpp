@@ -29,6 +29,7 @@ string opt_menu(string user, bool admin){
   cout << "3.Contar letras en un texto" << endl;
   cout << "4.Sumatoria y promedo de un vector" << endl;
   cout << "5.Calcular f(x)=5x*x+1/x" << endl;
+  cout << "6.Contar Palabras" << endl;
   if(admin){
     cout << "\n98.Lista de Usuarios" << endl;
     cout << "99.Ingresar Usuario" << endl;

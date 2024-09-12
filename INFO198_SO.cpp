@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/wait.h>
 
 #include "user_operation.h"
 #include "file_operation.h"
@@ -94,8 +95,28 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
               cout << "El resultado es: " << numf << endl;
             }
           }
-        
         break;
+
+        //6.Contar palabras
+        case 6:{
+          print_separation();
+          cout<<"Programa contador de palabras"<<endl;
+          pid_t pid = fork(); //Crear un proceso hijo
+          if (pid == 0) { 
+            execl("./contar_palabras", "contar_palabras", NULL);// Llamar al programa externo
+            exit(0); 
+          }
+          
+          else if (pid > 0) {
+            wait(NULL); // Esperar a que el proceso hijo termine
+          } 
+          
+          else {
+            cout<<"Error al crear el proceso"<<endl;
+          }                
+            break;
+        }
+        
         //98.Lista de usuarios
         case 98:
           print_separation();
