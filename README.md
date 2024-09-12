@@ -7,7 +7,7 @@ Este programa fue creado usando C++.
 
 ## Requisitos
 * Ubuntu 22.04 o superior
-* g++ 11.4.0 o superior
+* g++ 17 o superior
 * git 2.34.1 o superior
 
 ## Instalación
@@ -77,3 +77,8 @@ El programa puede calcular la sumatoria y el promedio de un vector ingresado por
 * Calcular Funcion:
 El programa puede calcular el resulta de una funcion usando un numer ingresado por el usuario
 
+* Contar Palabras: 
+El programa cuenta las veces que se repite cada palabra en un archivo.
+
+* Procesar Archivos:
+El programa procesa todos los archivos de una extension de una carpeta y guardar los conteos de palabras en otra carpeta.

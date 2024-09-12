@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cctype>
 
+//Cuenta el n° de veces que se repite cada palabra en un archivo
 map<string, int> contarPalabras(string &filename) {
     map<string, int> cont;
     ifstream archivo(filename); 
@@ -25,6 +26,7 @@ map<string, int> contarPalabras(string &filename) {
     return cont;
 }
 
+//Procesa todos los archivos con una extensión ingresada
 void procesarArchivos(string ext, string entrada, string salida) {
     bool archivosEncontrados = false;
 
