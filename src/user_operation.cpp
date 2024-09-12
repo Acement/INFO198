@@ -114,7 +114,7 @@ void add_user(){
   }
   newUser = user + "," + password + "," + role;
   
-  add_line_to_file(USERFILEPATH,newUser);
+  add_user_to_file(USERFILEPATH,newUser);
 }
 
 void erase_user(){
