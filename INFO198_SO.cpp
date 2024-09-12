@@ -150,7 +150,6 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
 int main(int argc, char** argv){
   int c = 0;
-  float numf;
   string userIn = "", passwordIn = "", textIn = "", num = "" , numVect= "";
   bool check ;
   bool admin = false;
