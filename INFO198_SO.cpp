@@ -97,18 +97,18 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           }
         break;
 
-        //6.Contar palabras
+        //6.Contar palabras de un archivo
         case 6:{
           print_separation();
           cout<<"Programa contador de palabras"<<endl;
           pid_t pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
-            execl("./contar_palabras", "contar_palabras", NULL);// Llamar al programa externo
+            execl("./contar_palabras", "contar_palabras", NULL);
             exit(0); 
           }
           
           else if (pid > 0) {
-            wait(NULL); // Esperar a que el proceso hijo termine
+            wait(NULL); 
           } 
           
           else {

@@ -1,7 +1,7 @@
 #include "func_cont.h"
 #include <iostream>
 #include <string>
-#include <unistd.h>  // Para getpid
+#include <unistd.h>  
 #include <filesystem>
 
 using namespace std;
