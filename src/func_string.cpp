@@ -119,14 +119,39 @@ string text_normalization(string s){
 
 //Muestra la lista de los usuarios
 void print_user_list(vector<tuple<string,string>> userVector){
-  int j = 0;
+  int j = 0, sizeUser = 0;
+  string tempUser = "", tempType = "";
+  string printUser = "Usuario", printType = "||Rol", separation = "-";
+  string adm = "Admin", userg = "Usuario Generico";
+
+
   for (tuple<string,string> i : userVector){
-    cout << "Usuario " << j << ": " << get<0>(i) << endl;
-    cout << "Rol : ";
-    if(get<1>(i) == "admin") cout << "Admin" << endl;
-    else if(get<1>(i) == "genuser") cout << "Usuario Generico" << endl;
-    else cout << "No definido" << endl;
-    cout << endl;
+    if(j >= 100) break;
+    if (sizeUser < get<0>(i).size()) sizeUser = get<0>(i).size();
+    j++;
+  }
+  sizeUser++;
+  j = 0;
+
+  while(printUser.size() < sizeUser) printUser += " ";
+  cout << printUser + printType << endl;
+  while(separation.size() < sizeUser) separation += "-";
+  separation += "|";
+  while(separation.size() < (sizeUser + userg.size() + 1))separation += "-";
+
+  cout << separation << endl;
+
+  for (tuple<string,string> i : userVector){
+    if (j >= 100) break;
+    tempUser = get<0>(i);
+
+    while (tempUser.size() < sizeUser) tempUser += " ";
+
+    if(get<1>(i) == "admin") tempType = adm;
+    else if(get<1>(i) == "genuser") tempType = userg;
+    else tempType = "No definido";
+
+    cout << tempUser + "|" + tempType << endl;
     j++;
   }
 }

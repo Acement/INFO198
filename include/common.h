@@ -8,6 +8,7 @@
 #include <fstream>
 #include <unistd.h>
 
+
 using namespace std;
 
 static string DIGITS = "0123456789,";

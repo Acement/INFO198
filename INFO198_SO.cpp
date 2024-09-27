@@ -37,6 +37,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
               cout << "'" << textIn <<"' no es palindrome" << endl;
             }
           }
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //2.Contar Vocales
         case 2:
@@ -48,11 +51,13 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             cout << "Opcion 2\n" << endl;
             cout << "'" << textIn << "' tiene " << count_symbols(textIn,VOCALS) << " vocales" << endl;
           }
-
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //3.Contar letras en un texto
         case 3:
-            print_separation();
+          print_separation();
           if(check_empty(textIn)){
             cout << "Parametro invalido, no se pudo realizar operacion" << endl;
           }
@@ -60,6 +65,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             cout << "Opcion 3\n" << endl;
             cout << "'" << textIn << "' tiene " << count_symbols(textIn,LETTERS) << " letras" << endl;
           }
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //4.Promedio y sumatoria de un vector
         case 4:
@@ -78,6 +86,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             cout << "La sumatoria es: " << summation(numVectSplit) << endl;
             cout << "El promedio es: " << average(numVectSplit) << endl;
           }
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //5.Calcular f(x)=5x*x+1/x
         case 5:
@@ -95,6 +106,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
               cout << "El resultado es: " << numf << endl;
             }
           }
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
 
         //6.Contar palabras de un archivo
@@ -122,18 +136,27 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           print_separation();
           cout << "Opcion 98\n" << endl; 
           print_user_list(get_user_list(USERFILEPATH));
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //99.Ingresar usuario
         case 99:
           print_separation();
           cout << "Opcion 99\n" << endl; 
           add_user();
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //100.Eliminar Usuario
         case 100:
           print_separation();
           cout << "Opcion 100\n" << endl;
           erase_user();
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
         break;
         //0.Salir
         case 0:
@@ -144,7 +167,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
         break;
       }
+
     }
+    
   }
 }
 
