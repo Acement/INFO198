@@ -48,6 +48,12 @@ Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este 
 ---Precaucion--- 
 t y v necesitan ingresarse con comillas
 
+Tipos de usuarios:
+
+Usuario Generico: Puede usar el sistema sin tener los permisos para manejar los los otros usuarios
+
+Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
+
 ## Funciones
 
 * Ingreso de usuarios:
