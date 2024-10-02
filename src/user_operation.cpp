@@ -3,7 +3,7 @@
 
 
 //Checkea si las credenciales ingresadas son correctas
-bool check_login(string user, string password, bool* admin){
+bool check_login(string user, string password, bool* admin, string userFilePath){
   vector<tuple<string,string,string>> userVector = {};
   if (user.size() < 3 ||  count_symbols(user,LETTERS) < user.size()){ //Checkea si el usuario ingresado tenga 3 o mas simbolos y que sean todos letras
     cout << "ERROR!, Usuario o contraseña incorrectos\n" << endl;
@@ -12,7 +12,7 @@ bool check_login(string user, string password, bool* admin){
     cout << "ERROR!, Usuario o contraseña incorrectos\n" << endl;
     return false;
   }else{
-    userVector = get_user_login(USERFILEPATH);
+    userVector = get_user_login(userFilePath);
     for(tuple<string,string,string> i : userVector){
       if(get<0>(i) == user && get<1>(i) == password){ //Verifica si el usuario y contraseña coinciden y si es admin
         if(get<2>(i) == "admin") *admin = true;
@@ -65,11 +65,11 @@ vector<tuple<string,string>> get_user_list(string fileName){
   return userVector;
 }
 
-void add_user(){
+void add_user(string userFilePath){
   string newUser = "";
   string user, password, temp, role;
   bool check;
-  vector<tuple<string,string>> userVector = get_user_list(USERFILEPATH);
+  vector<tuple<string,string>> userVector = get_user_list(userFilePath);
   do{
     cout << "Insgrese nombre de usuario nuevo (Tamaño minimo: 3, Solo letras): ";
     cin >> user;
@@ -114,10 +114,10 @@ void add_user(){
   }
   newUser = user + "," + password + "," + role;
   
-  add_user_to_file(USERFILEPATH,newUser);
+  add_user_to_file(userFilePath,newUser);
 }
 
-void erase_user(){
+void erase_user(string userFilePath){
   bool check = false;
   string temp, user;
   do{
@@ -130,7 +130,7 @@ void erase_user(){
   }while(!check);
   if(temp == "Y" || temp == "y"){
 
-    vector<string> read = read_file(USERFILEPATH);
+    vector<string> read = read_file(userFilePath);
     vector<string> tempUser = {};
     vector<string> fileIn = {};
     bool check = true;
@@ -154,7 +154,7 @@ void erase_user(){
     if(check){
       if(fileIn.size() == read.size()) cout << "\nNo se encontro Usuario" << endl;
       else {
-        erase_lines(USERFILEPATH,fileIn);
+        erase_lines(userFilePath,fileIn);
         cout << "\nSe elimino Usuario " << user << endl; 
       }
     }

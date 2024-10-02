@@ -10,17 +10,19 @@
 using namespace std;
 
 //Realiza la accion para la opcion elegida y repite el menu hasta salir
-void execute(bool check, string textIn, string numVect, string num,string user, bool admin){
+void execute(bool check, string textIn, string numVect, string num,string user, bool admin, string userFilePath){
 
   int opt;
   float numf;
+  bool checkIndex = false; //Flag temporal para crear indice invertido
   vector<int>numVectSplit = {};
+  
+  
 
   while (check == true){
-    opt = stoi(opt_menu(user,admin));
-    if(!admin && (opt == 98 || opt == 99 || opt == 100)){
-      cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
-    }
+    opt = stoi(opt_menu(user,admin,checkIndex));
+    if(!admin && (opt == 98 || opt == 99 || opt == 100)) cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
+    else if(opt == 8 && !checkIndex) cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
     else{
       switch(opt){
         //Detectar Palindrome
@@ -130,12 +132,36 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           }                
             break;
         }
+
+        case 7:
+          print_separation();
+
+          cout << "Opcion 7\n" << endl;
+
+          checkIndex = true; //Flag temporal para crear indice invertido
+
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
+        break;
         
+        case 8:
+          print_separation();
+
+          cout << "Opcion 8\n" << endl;
+
+
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
+        break;
+
         //98.Lista de usuarios
         case 98:
           print_separation();
           cout << "Opcion 98\n" << endl; 
-          print_user_list(get_user_list(USERFILEPATH));
+
+          print_user_list(get_user_list(userFilePath));
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
           getc(stdin);
@@ -144,7 +170,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 99:
           print_separation();
           cout << "Opcion 99\n" << endl; 
-          add_user();
+          add_user(userFilePath);
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
           getc(stdin);
@@ -153,7 +179,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 100:
           print_separation();
           cout << "Opcion 100\n" << endl;
-          erase_user();
+          erase_user(userFilePath);
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
           getc(stdin);
@@ -199,9 +225,20 @@ int main(int argc, char** argv){
       break;
     }
   }
+
+  string userFilePath = USER_FILE_PATH;
   
-  check = check_login(userIn,passwordIn,&admin);
-  execute(check,textIn,numVect,num,userIn,admin);
+  /*string userFilePath = getenv("USER_FILE_PATH");
+  if(userFilePath == "") cout << "USER_FILE_PATH not defined" << endl;
+  else{
+    cout << string(userFilePath);
+    check = check_login(userIn,passwordIn,&admin,userFilePath);
+    execute(check,textIn,numVect,num,userIn,admin,userFilePath);
+  }*/
+  
+  check = check_login(userIn,passwordIn,&admin,userFilePath);
+  execute(check,textIn,numVect,num,userIn,admin,userFilePath);
+  
 
   cout << "Cerrando programa...\n" << endl;
   return 0;

@@ -6,7 +6,7 @@
 using namespace std;
 
 bool check_num(string num);
-string opt_menu(string user, bool admin);
+string opt_menu(string user, bool admin, bool checkIndex);
 bool check_empty(string s);
 vector<int> split_num(string s, string separate);
 vector<string> split(string s, string separate);

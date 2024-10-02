@@ -11,7 +11,7 @@ bool check_num(string num){
 }
 
 //Menu del programa
-string opt_menu(string user, bool admin){
+string opt_menu(string user, bool admin, bool checkIndex){
   string opt;
   print_separation();
   cout << "SISTEMA " << getpid() << endl;
@@ -30,6 +30,8 @@ string opt_menu(string user, bool admin){
   cout << "4.Sumatoria y promedo de un vector" << endl;
   cout << "5.Calcular f(x)=5x*x+1/x" << endl;
   cout << "6.Contar Palabras" << endl;
+  cout << "7.Conteo Paralelo con threads" << endl;
+  if(checkIndex) cout << "8.Crear Indice invertido" << endl;
   if(admin){
     cout << "\n98.Lista de Usuarios" << endl;
     cout << "99.Ingresar Usuario" << endl;
@@ -40,7 +42,7 @@ string opt_menu(string user, bool admin){
   cin >> opt;
   if(opt.empty() || opt.find_first_not_of(DIGITS) != string::npos){
     cout << "No es un numero, Ingrese una de las opciones\n" << endl;
-    return opt_menu(user, admin);
+    return opt_menu(user, admin, checkIndex);
   }
   return opt;
 }
