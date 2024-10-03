@@ -226,20 +226,19 @@ int main(int argc, char** argv){
     }
   }
 
-  string userFilePath = USER_FILE_PATH;
   
-  /*string userFilePath = getenv("USER_FILE_PATH");
+  string userFilePath = getenv("USER_FILE_PATH");
   if(userFilePath == "") cout << "USER_FILE_PATH not defined" << endl;
   else{
-    cout << string(userFilePath);
+    cout << string(userFilePath) << endl;
     check = check_login(userIn,passwordIn,&admin,userFilePath);
     execute(check,textIn,numVect,num,userIn,admin,userFilePath);
-  }*/
+  }
   
-  check = check_login(userIn,passwordIn,&admin,userFilePath);
-  execute(check,textIn,numVect,num,userIn,admin,userFilePath);
+  //string userFilePath = USER_FILE_PATH;
+  //check = check_login(userIn,passwordIn,&admin,userFilePath);
+  //execute(check,textIn,numVect,num,userIn,admin,userFilePath);
   
-
   cout << "Cerrando programa...\n" << endl;
   return 0;
 }

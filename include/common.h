@@ -17,6 +17,6 @@ static string DIGITS = "0123456789,";
 static string VOCALS = "aeiouAEIOU";
 static string LETTERS = "abcdefghijklmnñopqrstuvwxyzABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
 
-static string USER_FILE_PATH = "./data/users.txt";
+//static string USER_FILE_PATH = "./data/users.txt";
 
 #endif
