@@ -143,10 +143,9 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           
 
           cout << "Opcion 7\n" << endl;
+
           open_threads();
           
-
-
           checkIndex = true; //Flag temporal para crear indice invertido
 
           cout << "\nPresione ENTER para continuar...";

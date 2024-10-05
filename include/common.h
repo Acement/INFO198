@@ -9,7 +9,7 @@
 #include <string.h>
 #include <fstream>
 #include <unistd.h>
-
+#include <sys/types.h>
 
 
 using namespace std;

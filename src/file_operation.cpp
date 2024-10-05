@@ -1,5 +1,16 @@
 #include "file_operation.h"
 
+vector<string> get_files(string folderPath){
+    vector<string> filePathList = {};
+
+    for(const auto & entry : fs::directory_iterator(folderPath)){
+        cout << entry.path() << endl;
+        filePathList.push_back(entry.path());
+    }
+    cout << "\n\n\n";
+
+    return filePathList;
+}
 
 //Abre el archivo y guarda cada linea en un vector
 vector<string> read_file(string fileName){
