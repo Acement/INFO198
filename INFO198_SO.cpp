@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include "thread_operation.h"
 #include "user_operation.h"
 #include "file_operation.h"
 #include "func_math.h"
@@ -8,6 +9,8 @@
 #include "common.h"
 
 using namespace std;
+
+
 
 //Realiza la accion para la opcion elegida y repite el menu hasta salir
 void execute(bool check, string textIn, string numVect, string num,string user, bool admin, string userFilePath){
@@ -133,10 +136,16 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             break;
         }
 
+        //7.Conteo Paralelo con threads
         case 7:
           print_separation();
 
+          
+
           cout << "Opcion 7\n" << endl;
+          open_threads();
+          
+
 
           checkIndex = true; //Flag temporal para crear indice invertido
 
