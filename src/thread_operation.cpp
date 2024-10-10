@@ -1,19 +1,10 @@
 #include "thread_operation.h"
-#include <fstream>
-#include <filesystem>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
-#include <pthread.h>
-#include <unistd.h>
-#include <mutex>
+#include "env_setter.h"
 
 using namespace std;
 
 // Declaración de la función para obtener variables de entorno
-string obtenerVariableEntorno(const char* var);
+string get_enviroment_variable(const char* var);
 
 pthread_mutex_t pthreadLock;
 map<string, map<int, int>> conteoGlobal; // Map que mantiene el conteo por archivo
@@ -119,14 +110,14 @@ void *print_file_path(void *threadOperation) {
 
 // Función para abrir los hilos y asignarles la operación
 void open_threads() {
-    int cantThreads = stoi(obtenerVariableEntorno("CANTIDAD_THREAD"));
+    int cantThreads = stoi(get_enviroment_variable("CANTIDAD_THREAD"));
     pthread_t threads[cantThreads];
     int rc;
 
     // Crea el vector con las direcciones de los archivos a leer
     vector<string> filePathList;
-    for (auto &ent : filesystem::directory_iterator(obtenerVariableEntorno("INPUT_DIR"))) {
-        if (ent.path().extension() == "." + string(obtenerVariableEntorno("EXTENSION"))) {
+    for (auto &ent : filesystem::directory_iterator(get_enviroment_variable("INPUT_DIR"))) {
+        if (ent.path().extension() == "." + string(get_enviroment_variable("EXTENSION"))) {
             filePathList.push_back(ent.path().string());
         }
     }
@@ -167,14 +158,7 @@ void open_threads() {
 }
 
 // Función para obtener una variable de entorno y manejar si no está definida
-string obtenerVariableEntorno(const char* var) {
-    char* valor = getenv(var);
-    if (valor == nullptr) {
-        cerr << "Error: La variable de entorno " << var << " no está definida." << endl;
-        exit(1);  // Terminar el programa si falta alguna variable de entorno
-    }
-    return string(valor);
-}
+
 
 // Función para crear el índice invertido a través de un proceso externo
 void crearIndiceInvertido() {
@@ -183,7 +167,7 @@ void crearIndiceInvertido() {
         return;
     }
 
-    string archivoInvertedIndex = obtenerVariableEntorno("INVERTED_INDEX");
+    string archivoInvertedIndex = get_enviroment_variable("INVERTED_INDEX");
     ofstream outFile(archivoInvertedIndex);
 
     for (auto &[palabra, archivoCantidades] : conteoGlobal) {
@@ -201,7 +185,7 @@ void crearIndiceInvertido() {
 // Crear el archivo mapa_archivo
 void crearMapaArchivo() {
     // Obtener la ruta desde la variable de entorno MAPA_ARCHIVOS
-    string archivoMapa = obtenerVariableEntorno("MAPA_ARCHIVOS");
+    string archivoMapa = get_enviroment_variable("MAPA_ARCHIVOS");
     
     // Directorio de entrada donde se encuentran los archivos a procesar
     string directorioEntrada = getenv("INPUT_DIR");

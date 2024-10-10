@@ -157,6 +157,19 @@ void print_user_list(vector<tuple<string,string>> userVector){
     j++;
   }
 }
+
+//remueve todas las ocurrencias de un caracter en un string
+string remove_character(string input, char c){
+  string output = "";
+  if(input.size() != 0){
+    for (int i = 0; i < input.size(); i++){
+      if(c != input[i]) output += input[i];
+    }
+  }
+  return output;
+}
+
+
 //Impriem una linea para separar las ejecuciones del sistema
 void print_separation(){
   cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" << endl;

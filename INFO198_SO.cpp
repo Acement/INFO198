@@ -1,11 +1,13 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+
 #include "thread_operation.h"
 #include "user_operation.h"
 #include "file_operation.h"
 #include "func_math.h"
 #include "func_string.h"
+#include "env_setter.h"
 #include "common.h"
 
 using namespace std;
@@ -143,7 +145,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           
 
           cout << "Opcion 7\n" << endl;
-          string archivoStopWords = obtenerVariableEntorno("STOP_WORDS");
+          string archivoStopWords = get_enviroment_variable("STOP_WORDS");
           cargarStopWords(archivoStopWords);
           open_threads();
           crearMapaArchivo();  // Crear el mapa de archivos
@@ -216,6 +218,9 @@ int main(int argc, char** argv){
   bool check ;
   bool admin = false;
 
+  set_env_from_file();
+  string userFilePath = get_enviroment_variable("USER_FILE_PATH");
+
 //Toma los valores de entrada
   while((c=getopt(argc,argv,"u:p:t:v:n:"))!=-1){
     switch(c){
@@ -238,13 +243,11 @@ int main(int argc, char** argv){
   }
 
   
-  string userFilePath = obtenerVariableEntorno("USER_FILE_PATH");
-  if(userFilePath == "") cout << "USER_FILE_PATH not defined" << endl;
-  else{
-    cout << string(userFilePath) << endl;
-    check = check_login(userIn,passwordIn,&admin,userFilePath);
-    execute(check,textIn,numVect,num,userIn,admin,userFilePath);
-  }
+  
+  cout << string(userFilePath) << endl;
+  check = check_login(userIn,passwordIn,&admin,userFilePath);
+  execute(check,textIn,numVect,num,userIn,admin,userFilePath);
+  
   
   //string userFilePath = USER_FILE_PATH;
   //check = check_login(userIn,passwordIn,&admin,userFilePath);

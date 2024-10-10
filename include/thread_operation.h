@@ -6,6 +6,12 @@
 #include <string>
 #include <set>
 #include <map>
+#include <fstream>
+#include <filesystem>
+#include <iostream>
+#include <pthread.h>
+#include <unistd.h>
+#include <mutex>
 using namespace std;
 
 // Declaraciones externas para las variables globales
@@ -22,6 +28,6 @@ void *print_file_path(void *threadOperation);
 void open_threads();
 void crearIndiceInvertido();
 void crearMapaArchivo();
-string obtenerVariableEntorno(const char* var);
+string get_enviroment_variable(const char* var);
 
 #endif // THREAD_OPERATION_H
