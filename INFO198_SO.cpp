@@ -137,14 +137,16 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         }
 
         //7.Conteo Paralelo con threads
-        case 7:
+        case 7:{
           print_separation();
 
           
 
           cout << "Opcion 7\n" << endl;
-
+          string archivoStopWords = obtenerVariableEntorno("STOP_WORDS");
+          cargarStopWords(archivoStopWords);
           open_threads();
+          crearMapaArchivo();  // Crear el mapa de archivos
           
           checkIndex = true; //Flag temporal para crear indice invertido
 
@@ -152,18 +154,19 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           getc(stdin);
           getc(stdin);
         break;
+        }
         
-        case 8:
+        case 8:{
           print_separation();
 
           cout << "Opcion 8\n" << endl;
-
+          crearIndiceInvertido();
 
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
           getc(stdin);
         break;
-
+        }
         //98.Lista de usuarios
         case 98:
           print_separation();
@@ -235,7 +238,7 @@ int main(int argc, char** argv){
   }
 
   
-  string userFilePath = getenv("USER_FILE_PATH");
+  string userFilePath = obtenerVariableEntorno("USER_FILE_PATH");
   if(userFilePath == "") cout << "USER_FILE_PATH not defined" << endl;
   else{
     cout << string(userFilePath) << endl;
