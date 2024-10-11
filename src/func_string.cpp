@@ -169,6 +169,15 @@ string remove_character(string input, char c){
   return output;
 }
 
+//Regresa el string sin los simbolos que no se encuentren en el filtro
+string filter_string(string input, string filter){
+  string output = "";
+  for(int i = 0; i < input.length(); i++) {
+    if(filter.find(input[i]) != string::npos) output += input[i];
+  }
+  return output;
+}
+
 
 //Impriem una linea para separar las ejecuciones del sistema
 void print_separation(){

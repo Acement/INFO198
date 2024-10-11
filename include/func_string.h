@@ -15,6 +15,7 @@ int count_symbols(string s, string filter);
 bool check_pali(string s);
 void print_user_list(vector<tuple<string,string>> userVector);
 string remove_character(string input, char c);
+string filter_string(string input , string filter);
 
 void print_separation();
 
