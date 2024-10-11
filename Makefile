@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -std=c++17 -I./include
 SRCS_PROG = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp INFO198_SO.cpp src/thread_operation.cpp src/env_setter.cpp 
 SRCS_CONTAR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp contar_palabras.cpp
 SRCS_PARALLEL = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp contar_paralelo.cpp
-SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp invertir_indice.cpp
+SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp invertir_indice.cpp
 
 OBJS_PROG = $(SRCS_PROG:src/%.cpp=obj/%.o)
 OBJS_CONTAR = $(SRCS_CONTAR:src/%.cpp=obj/%.o)

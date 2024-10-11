@@ -158,7 +158,6 @@ void open_threads() {
     pthread_mutex_destroy(&pthreadLock);
 }
 
-// Función para obtener una variable de entorno y manejar si no está definida
 
 
 // Función para crear el índice invertido a través de un proceso externo
