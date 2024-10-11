@@ -156,7 +156,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             cout<<"Error al crear el proceso"<<endl;
           }                
             
-
+        checkIndex =input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR"));
         cout << "\nPresione ENTER para continuar...";
         getc(stdin);
         getc(stdin);
