@@ -65,6 +65,8 @@ void *print_file_path(void *threadOperation) {
     string filePath;
     pid_t tid = gettid();  // Obtener el ID del thread
 
+    cout << tid << endl;
+
     // Obtener el vector de archivos desde la estructura
     threadVector = ((struct fileOperation*)threadOperation)->filePathList;
     int* id = ((struct fileOperation*)threadOperation)->id;
@@ -119,6 +121,7 @@ void open_threads() {
     for (auto &ent : filesystem::directory_iterator(get_enviroment_variable("INPUT_DIR"))) {
         if (ent.path().extension() == "." + string(get_enviroment_variable("EXTENSION"))) {
             filePathList.push_back(ent.path().string());
+            //cout << ent.path() << endl;
         }
     }
 
