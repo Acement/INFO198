@@ -244,7 +244,7 @@ int main(int argc, char** argv){
 
   
   
-  cout << string(userFilePath) << endl;
+  //cout << string(userFilePath) << endl;
   check = check_login(userIn,passwordIn,&admin,userFilePath);
   execute(check,textIn,numVect,num,userIn,admin,userFilePath);
   
