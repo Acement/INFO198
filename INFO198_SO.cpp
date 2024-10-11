@@ -2,7 +2,6 @@
 #include <sys/wait.h>
 
 
-#include "thread_operation.h"
 #include "user_operation.h"
 #include "file_operation.h"
 #include "func_math.h"
@@ -141,20 +140,26 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         //7.Conteo Paralelo con threads
         case 7:{
           print_separation();
-
+          cout<<"Opcion 7\n"<<endl;
+          cout<<"Programa contador de paralelo"<<endl;
+          pid_t pid = fork(); //Crear un proceso hijo
+          if (pid == 0) { 
+            execl("./contar_paralelo", "contar_paralelo", NULL);
+            exit(0); 
+          }
           
-
-          cout << "Opcion 7\n" << endl;
-          string archivoStopWords = get_enviroment_variable("STOP_WORDS");
-          cargarStopWords(archivoStopWords);
-          open_threads();
-          crearMapaArchivo();  // Crear el mapa de archivos
+          else if (pid > 0) {
+            wait(NULL); 
+          } 
           
-          checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
+          else {
+            cout<<"Error al crear el proceso"<<endl;
+          }                
+            
 
-          cout << "\nPresione ENTER para continuar...";
-          getc(stdin);
-          getc(stdin);
+        cout << "\nPresione ENTER para continuar...";
+        getc(stdin);
+        getc(stdin);
         break;
         }
         
@@ -172,7 +177,21 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           }
           else{
 
-            crearIndiceInvertido();
+            cout<<"Programa Invertir indice"<<endl;
+            pid_t pid = fork(); //Crear un proceso hijo
+            if (pid == 0) { 
+              execl("./invertir_indice", "invertir_indice", NULL);
+              exit(0); 
+            }
+          
+            else if (pid > 0) {
+              wait(NULL); 
+            } 
+          
+            else {
+              cout<<"Error al crear el proceso"<<endl;
+            }                
+
 
             cout << "\nPresione ENTER para continuar...";
             getc(stdin);
