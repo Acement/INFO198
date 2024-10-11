@@ -88,3 +88,6 @@ El programa cuenta las veces que se repite cada palabra en un archivo.
 
 * Procesar Archivos:
 El programa procesa todos los archivos de una extension de una carpeta y guardar los conteos de palabras en otra carpeta.
+
+* Indice invertido:
+El programa genera un archivo con las ocurrencia de palabras en los distintos archivos de entrada
