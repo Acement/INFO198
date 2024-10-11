@@ -1,13 +1,13 @@
 #include "file_operation.h"
 
-vector<string> get_files(string folderPath){
+//guarda los path de todos los archivos dentro de una carpeta
+vector<string> get_files_path(string folderPath){
     vector<string> filePathList = {};
 
     for(const auto & entry : fs::directory_iterator(folderPath)){
-        cout << entry.path() << endl;
         filePathList.push_back(entry.path());
     }
-    cout << "\n\n\n";
+
 
     return filePathList;
 }
@@ -24,6 +24,7 @@ vector<string> read_file(string fileName){
     return parseFile;
 }
 
+//Agrega linea a archivo (line tiene que tener un "\n" al final)
 void add_line_to_file(string fileName, string line){
     fstream myFile;
     myFile.open(fileName,ios::app);
@@ -31,6 +32,7 @@ void add_line_to_file(string fileName, string line){
     myFile.close();
 }
 
+//Agrega un usuario a la carpeta usuario
 void add_user_to_file(string fileName, string line){
     fstream myFile;
     myFile.open(fileName,ios::app);
@@ -39,6 +41,7 @@ void add_user_to_file(string fileName, string line){
     myFile.close();
 }
 
+//Borra lineas (Lento ya que escencialmente copia todas las lineas excepto la que se esta borrando)
 void erase_lines(string fileName, vector<string> fileIn){
     ofstream myFile;
     myFile.open(fileName,ofstream::out | ofstream::trunc);
@@ -51,4 +54,13 @@ void erase_lines(string fileName, vector<string> fileIn){
         j++;
     }
 
+}
+
+//Chekea si el archivo de entrada tiene la misma cantidad de archivos que el de salida
+bool input_output_file_check(string input, string output){
+    vector<string> inputVector = get_files_path(input);
+    vector<string> outputVector =get_files_path(output);
+
+    if(inputVector.size() != outputVector.size()) return false;
+    else return true;
 }

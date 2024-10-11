@@ -65,8 +65,6 @@ void *print_file_path(void *threadOperation) {
     string filePath;
     pid_t tid = gettid();  // Obtener el ID del thread
 
-    cout << tid << endl;
-
     // Obtener el vector de archivos desde la estructura
     threadVector = ((struct fileOperation*)threadOperation)->filePathList;
     int* id = ((struct fileOperation*)threadOperation)->id;

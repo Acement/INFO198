@@ -15,8 +15,8 @@
 using namespace std;
 
 static string DIGITS = "0123456789,";
-static string VOCALS = "aeiouAEIOU";
-static string LETTERS = "abcdefghijklmnñopqrstuvwxyzABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
+static string VOCALS = "aeiouAEIOUáéíóúÁÉÍÓÚ";
+static string LETTERS = "abcdefghijklmnñopqrstuvwxyzABCDEFGHYJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ";
 
 //static string USER_FILE_PATH = "./data/users.txt";
 

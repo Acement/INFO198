@@ -19,7 +19,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
   int opt;
   float numf;
-  bool checkIndex = false; //Flag temporal para crear indice invertido
+  bool checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
   vector<int>numVectSplit = {};
   
   
@@ -150,7 +150,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           open_threads();
           crearMapaArchivo();  // Crear el mapa de archivos
           
-          checkIndex = true; //Flag temporal para crear indice invertido
+          checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
 
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
@@ -160,14 +160,27 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         
         case 8:{
           print_separation();
-
           cout << "Opcion 8\n" << endl;
-          crearIndiceInvertido();
 
-          cout << "\nPresione ENTER para continuar...";
-          getc(stdin);
-          getc(stdin);
-        break;
+          //Checkea si existe la misma cantidad de archivos de entrada como de salida
+          if(!input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR"))){
+            cout << "ERROR! Algo a ocurrido en con los archivos" << endl;
+            cout << "\nPresione ENTER para continuar...";
+            getc(stdin);
+            getc(stdin);
+            break;
+          }
+          else{
+
+            crearIndiceInvertido();
+
+            cout << "\nPresione ENTER para continuar...";
+            getc(stdin);
+            getc(stdin);
+            break;
+          }
+
+          
         }
         //98.Lista de usuarios
         case 98:
