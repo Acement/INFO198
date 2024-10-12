@@ -160,27 +160,6 @@ void open_threads() {
 
 
 
-// Función para crear el índice invertido a través de un proceso externo
-void crearIndiceInvertido() {
-    if (!conteoProcesado) {
-        cerr << "Error: No se ha procesado el conteo paralelo con threads." << endl;
-        return;
-    }
-
-    string archivoInvertedIndex = get_enviroment_variable("INVERTED_INDEX");
-    ofstream outFile(archivoInvertedIndex);
-
-    for (auto &[palabra, archivoCantidades] : conteoGlobal) {
-        outFile << palabra << ";";
-        for (auto &[id, cantidad] : archivoCantidades) {
-            outFile << "(" << id << "," << cantidad << ");";
-        }
-        outFile << endl;
-    }
-    outFile.close();
-
-    cout << "Índice invertido creado y guardado en: " << archivoInvertedIndex << endl;
-}
 
 // Crear el archivo mapa_archivo
 void crearMapaArchivo() {
