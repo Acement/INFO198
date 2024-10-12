@@ -173,7 +173,7 @@ string remove_character(string input, char c){
 string filter_string(string input, string filter){
   string output = "";
   for(int i = 0; i < input.length(); i++) {
-    if(filter.find(input[i]) != string::npos) output += input[i];
+    if(filter.find(input[i]) != string::npos && input[i] != '�') output += input[i];
   }
   return output;
 }

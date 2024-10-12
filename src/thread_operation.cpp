@@ -1,5 +1,6 @@
 #include "thread_operation.h"
 #include "env_setter.h"
+#include "func_string.h"
 
 using namespace std;
 
@@ -41,7 +42,9 @@ map<string, int> contarPalabras(string filename) {
     while (archivo >> palabra) {
         for (char &c : palabra) {
             c = tolower(c); // Convertir a minúsculas
+
         }
+        palabra = filter_string(palabra,LETTERS);
         if (stopWords.find(palabra) == stopWords.end()) { // Ignorar stop words
             cont[palabra]++;
         }
@@ -95,7 +98,8 @@ void *print_file_path(void *threadOperation) {
         string archivoSalida = getenv("OUTPUT_DIR") + string("/") + to_string(fileID) + "." + getenv("EXTENSION");
         ofstream outFile(archivoSalida);
         for (auto &[palabra, cantidad] : conteoPalabras) {
-            outFile << palabra << ": " << cantidad << endl;
+            if(palabra != "") outFile << palabra << ": " << cantidad << endl;
+            
         }
         outFile.close();
 
