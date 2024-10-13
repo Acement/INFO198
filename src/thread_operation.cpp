@@ -95,7 +95,7 @@ void *print_file_path(void *threadOperation) {
         string archivoSalida = getenv("OUTPUT_DIR") + string("/") + to_string(fileID) + "." + getenv("EXTENSION");
         ofstream outFile(archivoSalida);
         for (auto &[palabra, cantidad] : conteoPalabras) {
-            if(palabra != "") outFile << palabra << ": " << cantidad << endl;
+            if(palabra != "") outFile << palabra << "; " << cantidad << endl;
             
         }
         outFile.close();
