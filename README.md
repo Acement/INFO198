@@ -50,10 +50,12 @@ Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este 
   ./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>
 ```
 
+
 * Tipos de usuarios:
 
 Usuario Generico: Puede usar el sistema sin tener los permisos para manejar los los otros usuarios
 Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
+
 
 * Tabla de usuarios
 
@@ -68,6 +70,7 @@ Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
 ---Precaucion--- 
 t y v necesitan ingresarse con comillas
 
+
 * Mapa de libros:
 
 Dentro se ve como:
@@ -76,10 +79,12 @@ Nombre, ID
 
 Donde:
 
-- Nombre: Es el nombre que tiene el archivo de texto
-- ID: Numero asignado al realizar conteo de palabras del archivo de texto
+-Nombre: Es el nombre que tiene el archivo de texto
+
+-ID: Numero asignado al realizar conteo de palabras del archivo de texto
 
 Se guarda dentro de la carpeta data
+
 
 * Archivos de salida de conteo de palabra:
 
@@ -95,12 +100,14 @@ Palabra; Cantidad
 
 Donde:
 
-- Palabra: Es la palabra que se extrajo del archivo de texto
-- Cantidad: Es la cantidad de veces que la palabra esta dentro del archivo e texto
+-Palabra: Es la palabra que se extrajo del archivo de texto
+
+-Cantidad: Es la cantidad de veces que la palabra esta dentro del archivo e texto
 
 Se guardan dentro de la carpeta word count
 
-* Indice Invertido
+
+* Indice Invertido:
 
 invertedIndex.index
 
@@ -110,9 +117,11 @@ Palabra;(ID1,Cantidad1);(ID2,Cantidad2);...
 
 Donde:
 
-- Palabra: La palabra dentro de los archivos de texto
-- IDN: Es la ID de uno de los archivo de texto
-- CantidadN: Es la cantidad de veces que la palabra se encuentra dentro del archivo de texto IDN
+-Palabra: La palabra dentro de los archivos de texto
+
+-IDN: Es la ID de uno de los archivo de texto
+
+-CantidadN: Es la cantidad de veces que la palabra se encuentra dentro del archivo de texto IDN
 
 Se guarda dentro de la carpeta Data
 
@@ -120,7 +129,7 @@ Se guarda dentro de la carpeta Data
 
 ## Funciones
 
-*Ingreso automatica de variables de entorno:
+* Ingreso automatica de variables de entorno:
 El programa es capaz de ingresar al sistema variables de entorno guardadas en .env
 
 * Ingreso de usuarios:
