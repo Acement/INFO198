@@ -23,7 +23,7 @@ Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguien
   cd INFO198/
 ```
 
-Despues Setear las variables de entorno dentro del archivo .env
+Despues Setear las variables de entorno dentro del archivo .env:
 
 ```cmd
   USER_FILE_PATH='<Direccion del archivo de usuarios>'
