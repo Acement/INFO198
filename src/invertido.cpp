@@ -3,10 +3,10 @@
 map<string, map<int, int>> invertedIndex;
 
 void cargarConteo(string& outputDir, string& extension) {
-    for (auto& entry : filesystem::directory_iterator(outputDir)) {
-        if (entry.path().extension() == "." + extension) {
-            int fileID = stoi(entry.path().stem().string()); // Asume que el nombre del archivo es el ID
-            ifstream archivo(entry.path());
+    for (auto& ent : filesystem::directory_iterator(outputDir)) {
+        if (ent.path().extension() == "." + extension) {
+            int fileID = stoi(ent.path().stem().string()); // Asume que el nombre del archivo es el ID
+            ifstream archivo(ent.path());
             string palabra;
             int cantidad;
 
@@ -26,9 +26,9 @@ void crearIndiceInvertido(string& outputFilePath) {
     }
 
     // Escribir el índice invertido en el archivo de salida
-    for (const auto& entry : invertedIndex) {
-        output << entry.first; // La palabra
-        for (const auto& [id, cantidad] : entry.second) {
+    for (auto& word : invertedIndex) {
+        output << word.first; // La palabra
+        for (auto& [id, cantidad] : word.second) {
             output << ";(" << id << "," << cantidad << ")"; // (ID, Cantidad)
         }
         output << endl;

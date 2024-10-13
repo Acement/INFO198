@@ -10,7 +10,7 @@ map<string, int> contarPalabras(string &filename) {
     ifstream archivo(filename); 
 
     if (!archivo.is_open()) {
-        cout<<"No se puede abrir el archivo: "<<filename<< endl;
+        cerr<<"No se puede abrir el archivo: "<<filename<< endl;
         return cont;
     }
 

@@ -4,13 +4,10 @@
 
 using namespace std;
 
-// Declaración de la función para obtener variables de entorno
-string get_enviroment_variable(const char* var);
 
 pthread_mutex_t pthreadLock;
 map<string, map<int, int>> conteoGlobal; // Map que mantiene el conteo por archivo
 set<string> stopWords; // Palabras a ignorar
-bool conteoProcesado = false; // Indica si el conteo ha sido procesado
 
 // Struct con el puntero del vector con las direcciones
 struct fileOperation {
@@ -103,11 +100,9 @@ void *print_file_path(void *threadOperation) {
         }
         outFile.close();
 
-        // Imprimir información sobre el archivo procesado
         cout << "Archivo procesado: " << archivoSalida << " | Thread " << tid << endl;
     }
 
-    conteoProcesado = true;  // Marcar que el conteo ha sido procesado
 
     return NULL;
 }
@@ -158,35 +153,28 @@ void open_threads() {
         pthread_join(threads[i], NULL);
     }
 
-    // Destruir el mutex
-    pthread_mutex_destroy(&pthreadLock);
+    pthread_mutex_destroy(&pthreadLock); // Destruir el mutex
+
 }
 
 
 
-
 // Crear el archivo mapa_archivo
-void crearMapaArchivo() {
-    // Obtener la ruta desde la variable de entorno MAPA_ARCHIVOS
-    string archivoMapa = get_enviroment_variable("MAPA_ARCHIVOS");
-    
-    // Directorio de entrada donde se encuentran los archivos a procesar
-    string directorioEntrada = getenv("INPUT_DIR");
-    
-    // Abrir el archivo de salida mapa_archivo
-    ofstream mapaArchivo(archivoMapa);
+void crearMapaArchivo() {    
+    int id = 0;
+    string archivoMapa = get_enviroment_variable("MAPA_ARCHIVOS"); // Obtener la ruta desde la variable de entorno MAPA_ARCHIVOS
+    string directorioEntrada = get_enviroment_variable("INPUT_DIR"); // Directorio de entrada donde se encuentran los archivos a procesar
+
+    ofstream mapaArchivo(archivoMapa);// Abrir el archivo de salida mapa_archivo
 
     if (!mapaArchivo.is_open()) {
         cerr << "Error al crear el archivo mapa_archivo en: " << archivoMapa << endl;
         return;
     }
 
-    int id = 0;
-    // Recorrer los archivos en el directorio de entrada
     for (auto &ent : filesystem::directory_iterator(directorioEntrada)) {
         if (ent.path().extension() == "." + string(getenv("EXTENSION"))) {
-            // Escribir en el archivo el nombre del archivo (sin la extensión) y su ID
-            mapaArchivo << ent.path().stem().string() << ", " << id << endl;
+            mapaArchivo << ent.path().stem().string() << ", " << id << endl;// Escribir en el archivo el nombre del archivo (sin la extensión) y su ID
             id++;
         }
     }
