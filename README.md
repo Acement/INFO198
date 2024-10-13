@@ -23,6 +23,19 @@ Luego de clonar el repositorio, mover la terminal a la carpeta usando el siguien
   cd INFO198/
 ```
 
+Despues Setear las variables de entorno dentro del archivo .env
+
+```cmd
+  USER_FILE_PATH='<Direccion del archivo de usuarios>'
+  CANTIDAD_THREAD='<Cantidad de threads que se quiere utilizar en numeros>'
+  MAPA_ARCHIVOS='<Direccion donde se quiera guardar el mapa de archivos>'
+  STOP_WORDS='<Direccion del archivo stop word>'
+  INPUT_DIR='>Direccion de la carpeta de archivos de entrada>'
+  EXTENSION='<Extencion de los archivos de entrada>'
+  OUTPUT_DIR='<Direccion de la carpeta donde se quiera guardar los archivos con el conteo de palabras>'
+  INVERTED_INDEX='<Direccion del archivo invertedIndex,index>'
+```
+
 Por ultimo compilar el programa con el siguiente comando:
 
 ```cmd
@@ -37,6 +50,13 @@ Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este 
   ./prog -u <Usuario> -p <Contraseña> -t <Texto> -v <Vector de numeros (1;2;3;4)> -n <Numero>
 ```
 
+* Tipos de usuarios:
+
+Usuario Generico: Puede usar el sistema sin tener los permisos para manejar los los otros usuarios
+Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
+
+* Tabla de usuarios
+
 | Argumento | Descripcion |
 | -------- | ----------- |
 | u | Especifica el usuario |
@@ -48,13 +68,60 @@ Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este 
 ---Precaucion--- 
 t y v necesitan ingresarse con comillas
 
-Tipos de usuarios:
+* Mapa de libros:
 
-Usuario Generico: Puede usar el sistema sin tener los permisos para manejar los los otros usuarios
+Dentro se ve como:
 
-Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
+Nombre, ID
+
+Donde:
+
+- Nombre: Es el nombre que tiene el archivo de texto
+- ID: Numero asignado al realizar conteo de palabras del archivo de texto
+
+Se guarda dentro de la carpeta data
+
+* Archivos de salida de conteo de palabra:
+
+Segrarda como:
+
+ID.txt
+
+ID es el mismo que en la seccion de arriba
+
+Dentro se ve como:
+
+Palabra; Cantidad
+
+Donde:
+
+- Palabra: Es la palabra que se extrajo del archivo de texto
+- Cantidad: Es la cantidad de veces que la palabra esta dentro del archivo e texto
+
+Se guardan dentro de la carpeta word count
+
+* Indice Invertido
+
+invertedIndex.index
+
+Dentro se ve como:
+
+Palabra;(ID1,Cantidad1);(ID2,Cantidad2);...
+
+Donde:
+
+- Palabra: La palabra dentro de los archivos de texto
+- IDN: Es la ID de uno de los archivo de texto
+- CantidadN: Es la cantidad de veces que la palabra se encuentra dentro del archivo de texto IDN
+
+Se guarda dentro de la carpeta Data
+
+
 
 ## Funciones
+
+*Ingreso automatica de variables de entorno:
+El programa es capaz de ingresar al sistema variables de entorno guardadas en .env
 
 * Ingreso de usuarios:
 El programa puede ingresar Usuarios y contraseñas, con lo cual puede aceptar o negar el ingreso al Sistema
