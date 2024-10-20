@@ -38,7 +38,9 @@ map<string, int> contarPalabras(string filename) {
     string palabra;
     while (archivo >> palabra) {
         for (char &c : palabra) {
+            //if(c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú') c = accent_upper_to_lower(c);
             c = tolower(c); // Convertir a minúsculas
+            
 
         }
         palabra = filter_string(palabra,LETTERS);

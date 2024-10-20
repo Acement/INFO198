@@ -17,6 +17,8 @@ void print_user_list(vector<tuple<string,string>> userVector);
 string remove_character(string input, char c);
 string filter_string(string input , string filter);
 
+//char accent_upper_to_lower(char c); Dice overflow
+
 void print_separation();
 
 

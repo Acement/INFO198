@@ -32,6 +32,7 @@ string opt_menu(string user, bool admin, bool checkIndex){
   cout << "6.Contar Palabras" << endl;
   cout << "7.Conteo Paralelo con threads" << endl;
   if(checkIndex) cout << "8.Crear Indice invertido" << endl;
+  cout << "9.Analisis de performance" << endl;
   if(admin){
     cout << "\n98.Lista de Usuarios" << endl;
     cout << "99.Ingresar Usuario" << endl;
@@ -177,6 +178,14 @@ string filter_string(string input, string filter){
   }
   return output;
 }
+
+/*char accent_upper_to_lower(char c){
+  if (c = 'Á') return 'á';
+  if (c = 'É') return 'é';
+  if (c = 'Í') return 'í';
+  if (c = 'Ó') return 'ó';
+  if (c = 'Ú') return 'ú';
+}*/
 
 
 //Impriem una linea para separar las ejecuciones del sistema

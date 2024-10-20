@@ -20,8 +20,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
   float numf;
   bool checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
   vector<int>numVectSplit = {};
-  
-  
+  pid_t pid;
 
   while (check == true){
     opt = stoi(opt_menu(user,admin,checkIndex));
@@ -121,7 +120,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 6:{
           print_separation();
           cout<<"Programa contador de palabras"<<endl;
-          pid_t pid = fork(); //Crear un proceso hijo
+          pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
             execl("./contar_palabras", "contar_palabras", NULL);
             exit(0); 
@@ -142,7 +141,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           print_separation();
           cout<<"Opcion 7\n"<<endl;
           cout<<"Programa contador de paralelo"<<endl;
-          pid_t pid = fork(); //Crear un proceso hijo
+          pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
             execl("./contar_paralelo", "contar_paralelo", NULL);
             exit(0); 
@@ -178,7 +177,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           else{
 
             cout<<"Programa Invertir indice"<<endl;
-            pid_t pid = fork(); //Crear un proceso hijo
+            pid = fork(); //Crear un proceso hijo
             if (pid == 0) { 
               execl("./invertir_indice", "invertir_indice", NULL);
               exit(0); 
@@ -201,6 +200,26 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
           
         }
+        case 9:
+          print_separation();
+          cout << "Opcion 9\n" << endl;
+          pid = fork(); //Crear un proceso hijo
+          if (pid == 0) { 
+            execl("./ejecutador", "ejecutador", NULL);
+            exit(0); 
+          }
+          else if (pid > 0) {
+            wait(NULL); 
+          } 
+          else {
+            cout<<"Error al crear el proceso"<<endl;
+          }
+          
+
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
+        break;
         //98.Lista de usuarios
         case 98:
           print_separation();
@@ -249,6 +268,7 @@ int main(int argc, char** argv){
   string userIn = "", passwordIn = "", textIn = "", num = "" , numVect= "";
   bool check ;
   bool admin = false;
+  
 
   set_env_from_file();
   string userFilePath = get_enviroment_variable("USER_FILE_PATH");
@@ -274,16 +294,10 @@ int main(int argc, char** argv){
     }
   }
 
-  
-  
-  //cout << string(userFilePath) << endl;
+
   check = check_login(userIn,passwordIn,&admin,userFilePath);
   execute(check,textIn,numVect,num,userIn,admin,userFilePath);
   
-  
-  //string userFilePath = USER_FILE_PATH;
-  //check = check_login(userIn,passwordIn,&admin,userFilePath);
-  //execute(check,textIn,numVect,num,userIn,admin,userFilePath);
   
   cout << "Cerrando programa...\n" << endl;
   return 0;

@@ -56,6 +56,13 @@ void erase_lines(string fileName, vector<string> fileIn){
 
 }
 
+//Borra los contenidos de un archivo
+void erase_file_contents(string fileName){
+    ofstream myFile;
+    myFile.open(fileName,ofstream::out | ofstream::trunc);
+    myFile.close();
+}
+
 //Chekea si el archivo de entrada tiene la misma cantidad de archivos que el de salida
 bool input_output_file_check(string input, string output){
     vector<string> inputVector = get_files_path(input);

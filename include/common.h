@@ -10,6 +10,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <sys/types.h>
+#include <time.h>
 
 
 using namespace std;
