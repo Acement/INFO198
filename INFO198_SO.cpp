@@ -22,10 +22,12 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
   vector<int>numVectSplit = {};
   pid_t pid;
 
+  //Variables para pasar como argumento a opcion 9 (Analisis de performance)
   string rep = getenv("REPETICIONES");
   string threadArray = getenv("ARRAY_THREADS");
   string ogThreads = getenv("CANTIDAD_THREAD");
   string datos = getenv("DATOS");
+  string grafico = getenv("GRAFICO");
 
   while (check == true){
     opt = stoi(opt_menu(user,admin,checkIndex));
@@ -167,6 +169,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         break;
         }
         
+        //8.Crear Indice Invertido
         case 8:{
           print_separation();
           cout << "Opcion 8\n" << endl;
@@ -205,6 +208,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
           
         }
+        //9.Analisis de performance
         case 9:
           print_separation();
           cout << "Opcion 9\n" << endl;
@@ -212,7 +216,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
           pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
-            execl("./ejecutador" , rep.c_str() , threadArray.c_str(), ogThreads.c_str(), datos.c_str() , "ejecutador", NULL);
+            execl("./ejecutador" , rep.c_str() , threadArray.c_str(), ogThreads.c_str(), datos.c_str(), grafico.c_str() , "ejecutador", NULL); //llama a ejecutador y le entrega parametros como argumentos
             exit(0); 
           }
           else if (pid > 0) {
