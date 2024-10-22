@@ -22,6 +22,11 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
   vector<int>numVectSplit = {};
   pid_t pid;
 
+  string rep = getenv("REPETICIONES");
+  string threadArray = getenv("ARRAY_THREADS");
+  string ogThreads = getenv("CANTIDAD_THREAD");
+  string datos = getenv("DATOS");
+
   while (check == true){
     opt = stoi(opt_menu(user,admin,checkIndex));
     if(!admin && (opt == 98 || opt == 99 || opt == 100)) cout << "Se ingreso opcion equivocada, ingrese de nuevo\n" << endl;
@@ -179,7 +184,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
             cout<<"Programa Invertir indice"<<endl;
             pid = fork(); //Crear un proceso hijo
             if (pid == 0) { 
-              execl("./invertir_indice", "invertir_indice", NULL);
+              execl("./invertir_indice" , "invertir_indice", NULL);
               exit(0); 
             }
           
@@ -203,9 +208,11 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 9:
           print_separation();
           cout << "Opcion 9\n" << endl;
+
+
           pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
-            execl("./ejecutador", "ejecutador", NULL);
+            execl("./ejecutador" , rep.c_str() , threadArray.c_str(), ogThreads.c_str(), datos.c_str() , "ejecutador", NULL);
             exit(0); 
           }
           else if (pid > 0) {

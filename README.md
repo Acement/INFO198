@@ -9,6 +9,10 @@ Este programa fue creado usando C++.
 * Ubuntu 22.04 o superior
 * g++ 17 o superior
 * git 2.34.1 o superior
+* Python 3.12.3 o superior
+* pip 24.0 o superior
+* Librerias para python:
+  - python-decouple
 
 ## Instalación
 En la carpeta donde se desea guarda el programa, abrir la terminal y ejecutar el siguiente comando git:
