@@ -1,4 +1,4 @@
-,m# INFO198_SO.cpp
+## INFO198_SO.cpp
 
 ## Descripcion
 Programa propuesto en el curso INFO198 Sistemas Operativos donde se creara un sistema operativo a lo largo del semestre, donde se podra ejecutar ingresando varaiables descritas mas abajo.
@@ -38,6 +38,10 @@ Despues Setear las variables de entorno dentro del archivo .env:
   EXTENSION='<Extencion de los archivos de entrada>'
   OUTPUT_DIR='<Direccion de la carpeta donde se quiera guardar los archivos con el conteo de palabras>'
   INVERTED_INDEX='<Direccion del archivo invertedIndex,index>'
+  ARRAY_THREADS='<Arreglo con la cantidad de threads a usar(1,2,4,...) separados por una coma>'
+  REPETICIONES='<Cantidad de repeticiones que realizara la funcion analisis de performance>'
+  DATOS='<Direccion donde se guarda los tiempos al realizar la funcion analisis de performance>'
+  GRAFICO='<Direccion donde se guarda la imagen png con el grafico comparativo>'
 ```
 
 Por ultimo compilar el programa con el siguiente comando:
