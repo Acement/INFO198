@@ -1,4 +1,4 @@
-## INFO198_SO.cpp
+# INFO198_SO.cpp
 
 ## Descripcion
 Programa propuesto en el curso INFO198 Sistemas Operativos donde se creara un sistema operativo a lo largo del semestre, donde se podra ejecutar ingresando varaiables descritas mas abajo.
@@ -59,13 +59,13 @@ Para ejecutar el programa, abrir una terminal en la carpeta donde se ubica este 
 ```
 
 
-* Tipos de usuarios:
+### Tipos de usuarios:
 
 Usuario Generico: Puede usar el sistema sin tener los permisos para manejar los los otros usuarios
 Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
 
 
-* Tabla de usuarios
+### Tabla de usuarios
 
 | Argumento | Descripcion |
 | -------- | ----------- |
@@ -79,7 +79,7 @@ Admin: Ademas de usar el sistema puede listar, agregar y quitar usuarios
 t y v necesitan ingresarse con comillas
 
 
-* Mapa de libros:
+### Mapa de libros:
 
 Se guarda como:
 ```cmd
@@ -100,7 +100,7 @@ Donde:
 Se guarda dentro de la carpeta data
 
 
-* Archivos de salida de conteo de palabra:
+### Archivos de salida de conteo de palabra:
 
 Se guarda como:
 
@@ -123,7 +123,7 @@ Donde:
 Se guardan dentro de la carpeta word count
 
 
-* Indice Invertido:
+### Indice Invertido:
 
 ```cmd
 invertedIndex.index
