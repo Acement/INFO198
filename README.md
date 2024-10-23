@@ -1,4 +1,4 @@
-# INFO198_SO.cpp
+,m# INFO198_SO.cpp
 
 ## Descripcion
 Programa propuesto en el curso INFO198 Sistemas Operativos donde se creara un sistema operativo a lo largo del semestre, donde se podra ejecutar ingresando varaiables descritas mas abajo.
@@ -77,57 +77,66 @@ t y v necesitan ingresarse con comillas
 
 * Mapa de libros:
 
+Se guarda como:
+```cmd
+map.txt
+```
 Dentro se ve como:
 
+
+```cmd
 Nombre, ID
-
+```
 Donde:
-
--Nombre: Es el nombre que tiene el archivo de texto
-
--ID: Numero asignado al realizar conteo de palabras del archivo de texto
+| Argumento | Descripcion |
+| -------- | ----------- |
+| Nombre | Es el nombre que tiene el archivo de texto |
+| ID | Numero asignado al realizar conteo de palabras del archivo de texto |
 
 Se guarda dentro de la carpeta data
 
 
 * Archivos de salida de conteo de palabra:
 
-Segrarda como:
+Se guarda como:
 
+```cmd
 ID.txt
-
+```
 ID es el mismo que en la seccion de arriba
 
 Dentro se ve como:
 
+```cmd
 Palabra; Cantidad
-
+```
 Donde:
-
--Palabra: Es la palabra que se extrajo del archivo de texto
-
--Cantidad: Es la cantidad de veces que la palabra esta dentro del archivo e texto
+| Argumento | Descripcion |
+| -------- | ----------- |
+| Palabra | Es la palabra que se extrajo del archivo de texto |
+| Cantidad | Es la cantidad de veces que la palabra esta dentro del archivo e texto |
 
 Se guardan dentro de la carpeta word count
 
 
 * Indice Invertido:
 
+```cmd
 invertedIndex.index
-
+```
 Dentro se ve como:
 
+```cmd
 Palabra;(ID1,Cantidad1);(ID2,Cantidad2);...
-
+```
 Donde:
+| Argumento | Descripcion |
+| -------- | ----------- |
+| Palabra | La palabra dentro de los archivos de texto |
+| IDN | Es la ID de uno de los archivo de texto |
+| CantidadN | Es la cantidad de veces que la palabra se encuentra dentro del archivo de texto IDN|
 
--Palabra: La palabra dentro de los archivos de texto
-
--IDN: Es la ID de uno de los archivo de texto
-
--CantidadN: Es la cantidad de veces que la palabra se encuentra dentro del archivo de texto IDN
-
-Se guarda dentro de la carpeta Data
+Se guarda dentro de la carpeta data
 
 
 
@@ -165,6 +174,9 @@ El programa puede calcular el resulta de una funcion usando un numer ingresado p
 
 * Contar Palabras: 
 El programa cuenta las veces que se repite cada palabra en un archivo.
+
+* Analisis de performance
+El programa puede testear la performance, usando la funcion contar palabras y diferentes cantidades de threads, luego los guarda en un grafico
 
 * Procesar Archivos:
 El programa procesa todos los archivos de una extension de una carpeta y guardar los conteos de palabras en otra carpeta.
