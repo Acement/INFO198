@@ -231,6 +231,31 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           getc(stdin);
           getc(stdin);
         break;
+
+
+
+        //10.PLANIFICADOR
+        case 10:{
+          print_separation();
+          cout<<"Planificador"<<endl;
+          pid_t pid = fork(); //Crear un proceso hijo
+          if (pid == 0) { 
+            execl("./planificador", "planificador", NULL);
+            exit(0); 
+          }
+          
+          else if (pid > 0) {
+            wait(NULL); 
+          } 
+          
+          else {
+            cout<<"Error al crear el proceso"<<endl;
+          }                
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
+          break;
+        }
         //98.Lista de usuarios
         case 98:
           print_separation();

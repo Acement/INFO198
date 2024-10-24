@@ -6,20 +6,29 @@ SRCS_CONTAR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/fun
 SRCS_PARALLEL = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp contar_paralelo.cpp
 SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp invertir_indice.cpp
 SRCS_EJECUTADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp ejecutador.cpp
+SRCS_PLANIFICADOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp planificador.cpp
+SRCS_DISTRIBUIDOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp distribuidor.cpp
+SRCS_CORE= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp core.cpp
 
 OBJS_PROG = $(SRCS_PROG:src/%.cpp=obj/%.o)
 OBJS_CONTAR = $(SRCS_CONTAR:src/%.cpp=obj/%.o)
 OBJS_PARALLEL = $(SRCS_PARALLEL:src/%.cpp=obj/%.o)
 OBJS_INVERTIR = $(SRCS_INVERTIR:src/%.cpp=obj/%.o)
 OBJS_EJECUTOR = $(SRCS_EJECUTADOR:src/%.cpp=obj/%.o)
+OBJS_PLANIFICADOR = $(SRCS_PLANIFICADOR:src/%.cpp=obj/%.o)
+OBJS_DISTRIBUIDOR = $(SRCS_DISTRIBUIDOR:src/%.cpp=obj/%.o)
+OBJS_CORE = $(SRCS_CORE:src/%.cpp=obj/%.o)
 
 TARGET_PROG = prog
 TARGET_CONTAR = contar_palabras
 TARGET_PARALLELO = contar_paralelo
 TARGET_INVERTIR = invertir_indice
 TARGET_EJECUTADOR = ejecutador
+TARGET_PLANIFICADOR = planificador
+TARGET_DISTRIBUIDOR = distribuidor
+TARGET_CORE = core
 
-all: $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR)
+all: $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE)
 
 $(TARGET_PROG): $(OBJS_PROG)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_PROG)
@@ -36,11 +45,20 @@ $(TARGET_INVERTIR): $(OBJS_INVERTIR)
 $(TARGET_EJECUTADOR): $(OBJS_EJECUTOR)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_EJECUTOR)
 
+$(TARGET_PLANIFICADOR): $(OBJS_PLANIFICADOR)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_PLANIFICADOR)
+
+$(TARGET_DISTRIBUIDOR): $(OBJS_DISTRIBUIDOR)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_DISTRIBUIDOR)
+
+$(TARGET_CORE): $(OBJS_CORE)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_CORE)
+
 obj/%.o: src/%.cpp
 	@mkdir -p obj
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f obj/*.o $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR)
+	rm -f obj/*.o $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE)
 
 .PHONY: all clean
