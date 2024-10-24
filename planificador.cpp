@@ -10,14 +10,14 @@
 
 using namespace std;
 
-const char* procesos_path = getenv("PROCESOS");
-const char* resultados_path = getenv("RESULTADOS");
-const int cantidad_cores = stoi(getenv("CANTIDAD_CORES"));
+char* procesos_path = getenv("PROCESOS");
+char* resultados_path = getenv("RESULTADOS");
+int cantidad_cores = stoi(getenv("CANTIDAD_CORES"));
 
 vector<bool> cores_disponibles(cantidad_cores, true); // Inicialmente, todos los núcleos están libres
 
 int obtener_core_disponible() {
-    for (int i = 0; i < cantidad_cores; ++i) {
+    for (int i = 0; i < cantidad_cores; i++) {
         if (cores_disponibles[i]) {
             cores_disponibles[i] = false; // Marcar el núcleo como ocupado
             return i; // Retorna el primer núcleo disponible

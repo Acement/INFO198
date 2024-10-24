@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void calcular(const string& operacion) {
+void calcular(int core_id, const string& operacion) {
     ofstream resultados(getenv("RESULTADOS"), ios::app);
     int id;
     string op;
@@ -40,13 +40,17 @@ void calcular(const string& operacion) {
         resultado = num1 * num2;
     }
 
-    resultados << "(" << id<< ":" << operacion << ")=>" << resultado << std::endl;
+    // Escribir el resultado junto con el core_id en el archivo
+    resultados << "(CORE " << core_id << ": " << operacion << ") => " << resultado << endl;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc > 1) {
-        string operacion = argv[1];
-        calcular(operacion);
+    if (argc > 2) {
+        // Recibir core_id como primer argumento
+        int core_id = stoi(argv[1]);
+        string operacion = argv[2];
+        
+        calcular(core_id, operacion);
     }
     return 0;
 }
