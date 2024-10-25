@@ -10,7 +10,7 @@ void procesar_mensaje(string& mensaje) {
         core_id = stoi(mensaje.substr(0, pos)); // Extraer core_id
         operacion = mensaje.substr(pos + 1);    // Extraer operación
     }
-
+    cout<<core_id<<": "<<operacion<<endl; // Salida de depuración
     // Convertir core_id a string
     string core_id_str = to_string(core_id);
 
