@@ -163,7 +163,7 @@ Donde:
 | Operacion | Es la operacion que se encuentra en procesos.txt (solo pueden ser 4 suma, resta, division o multiplicacion)|
 |numero1 | Es el primer numero de la operacion (solo pueden ser dos numeros)|
 |numero2 | Es el segundo numero de la operacion (solo pueden ser dos numeros)|
-|resultado| Es el resultado de la opercion(suma, resta, division o multiplicacion)|
+|resultado| Es el resultado de la operación(suma, resta, division o multiplicacion)|
 
 
 Se guarda dentro de la carpeta data
@@ -208,6 +208,9 @@ El programa cuenta las veces que se repite cada palabra en un archivo.
 
 * Analisis de performance
 El programa puede testear la performance, usando la funcion contar palabras y diferentes cantidades de threads, luego los guarda en un grafico
+
+*Procesos:
+El programa ve si el core esta disponible y lee la informacion del archivo procesos envia la informacion a distribuidor y el id core, distribudor lee el mensaje y se lo envia a core que calcula el resultado de cada operacion, guardandolo en resultados.
 
 * Procesar Archivos:
 El programa procesa todos los archivos de una extension de una carpeta y guardar los conteos de palabras en otra carpeta.
