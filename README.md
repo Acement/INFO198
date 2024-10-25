@@ -145,6 +145,29 @@ Donde:
 
 Se guarda dentro de la carpeta data
 
+### Procesos:
+
+```cmd
+resultados.txt
+```
+Dentro se ve como:
+
+```cmd
+(ID Core;ID1;Operacion;numero1,numero2)=>resultado;(ID Core;ID2;Operacion;numero1,numero2)=>resultado;...
+```
+Donde:
+| Argumento | Descripcion |
+| -------- | ----------- |
+| ID Core | Es el ID CORE sobre el cual se debe ejecutar la operación|
+| ID | Es la ID  |
+| Operacion | Es la operacion que se encuentra en procesos.txt (solo pueden ser 4 suma, resta, division y multiplicacion)|
+|numero1 | Es el primer numero de la operacion (solo pueden ser dos numeros)|
+|numero2 | Es el segundo numero de la operacion (solo pueden ser dos numeros)|
+
+
+Se guarda dentro de la carpeta data
+
+
 
 
 ## Funciones
