@@ -160,9 +160,10 @@ Donde:
 | -------- | ----------- |
 | ID Core | Es el ID CORE sobre el cual se debe ejecutar la operación|
 | ID | Es la ID  |
-| Operacion | Es la operacion que se encuentra en procesos.txt (solo pueden ser 4 suma, resta, division y multiplicacion)|
+| Operacion | Es la operacion que se encuentra en procesos.txt (solo pueden ser 4 suma, resta, division o multiplicacion)|
 |numero1 | Es el primer numero de la operacion (solo pueden ser dos numeros)|
 |numero2 | Es el segundo numero de la operacion (solo pueden ser dos numeros)|
+|resultado| Es el resultado de la opercion(suma, resta, division o multiplicacion)|
 
 
 Se guarda dentro de la carpeta data
