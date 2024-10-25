@@ -209,7 +209,7 @@ El programa cuenta las veces que se repite cada palabra en un archivo.
 * Analisis de performance
 El programa puede testear la performance, usando la funcion contar palabras y diferentes cantidades de threads, luego los guarda en un grafico
 
-*Procesos:
+* Procesos:
 El programa ve si el core esta disponible y lee la informacion del archivo procesos envia la informacion a distribuidor y el id core, distribudor lee el mensaje y se lo envia a core que calcula el resultado de cada operacion, guardandolo en resultados.
 
 * Procesar Archivos:
