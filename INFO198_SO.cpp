@@ -238,6 +238,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         case 10:{
           print_separation();
           cout<<"Planificador"<<endl;
+          erase_file_contents(getenv("RESULTADOS"));
           pid_t pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
             execl("./planificador", "planificador", NULL);

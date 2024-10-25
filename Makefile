@@ -6,9 +6,9 @@ SRCS_CONTAR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/fun
 SRCS_PARALLEL = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp contar_paralelo.cpp
 SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp invertir_indice.cpp
 SRCS_EJECUTADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp ejecutador.cpp
-SRCS_PLANIFICADOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp planificador.cpp
-SRCS_DISTRIBUIDOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp distribuidor.cpp
-SRCS_CORE= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp core.cpp
+SRCS_PLANIFICADOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_planificador.cpp planificador.cpp
+SRCS_DISTRIBUIDOR= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_distribuidor.cpp distribuidor.cpp
+SRCS_CORE= src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_core.cpp core.cpp
 
 OBJS_PROG = $(SRCS_PROG:src/%.cpp=obj/%.o)
 OBJS_CONTAR = $(SRCS_CONTAR:src/%.cpp=obj/%.o)
