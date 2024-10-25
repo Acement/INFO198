@@ -34,7 +34,7 @@ Despues Setear las variables de entorno dentro del archivo .env:
   CANTIDAD_THREAD='<Cantidad de threads que se quiere utilizar en numeros>'
   MAPA_ARCHIVOS='<Direccion donde se quiera guardar el mapa de archivos>'
   STOP_WORDS='<Direccion del archivo stop word>'
-  INPUT_DIR='>Direccion de la carpeta de archivos de entrada>'
+  INPUT_DIR='<Direccion de la carpeta de archivos de entrada>'
   EXTENSION='<Extencion de los archivos de entrada>'
   OUTPUT_DIR='<Direccion de la carpeta donde se quiera guardar los archivos con el conteo de palabras>'
   INVERTED_INDEX='<Direccion del archivo invertedIndex,index>'
@@ -42,6 +42,9 @@ Despues Setear las variables de entorno dentro del archivo .env:
   REPETICIONES='<Cantidad de repeticiones que realizara la funcion analisis de performance>'
   DATOS='<Direccion donde se guarda los tiempos al realizar la funcion analisis de performance>'
   GRAFICO='<Direccion donde se guarda la imagen png con el grafico comparativo>'
+  CANTIDAD_CORES='<Cantidad de cores que se quiere utilizar en procesos>'
+  PROCESOS='<Direccion del archivo procesos>'
+  RESULTADOS='<Direccion del archivo resultados>'
 ```
 
 Por ultimo compilar el programa con el siguiente comando:
