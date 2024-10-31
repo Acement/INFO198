@@ -257,6 +257,27 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           getc(stdin);
           break;
         }
+        //20.Buscador
+        case 20:
+          cout << "Opcion 20" << endl;
+
+          pid = fork(); //Crear un proceso hijo
+          if (pid == 0) { 
+            execl("./buscador","buscador",NULL);
+            exit(0); 
+          }
+          else if (pid > 0) {
+            wait(NULL); 
+          } 
+          else {
+            cout<<"Error al crear el proceso"<<endl;
+          }
+
+          cout << "\nPresione ENTER para continuar...";
+          getc(stdin);
+          getc(stdin);
+          break;
+        break;
         //98.Lista de usuarios
         case 98:
           print_separation();

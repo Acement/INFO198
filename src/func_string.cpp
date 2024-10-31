@@ -34,7 +34,7 @@ string opt_menu(string user, bool admin, bool checkIndex){
   if(checkIndex) cout << "8.Crear Indice invertido" << endl;
   cout << "9.Analisis de performance" << endl;
   cout << "10.Planificador" << endl;
-
+  cout << "20.Buscador" << endl;
   if(admin){
     cout << "\n98.Lista de Usuarios" << endl;
     cout << "99.Ingresar Usuario" << endl;
