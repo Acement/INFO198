@@ -24,6 +24,49 @@ vector<string> read_file(string fileName){
     return parseFile;
 }
 
+//Abre el archivo y guarda las primeras numLines lineas en un vector
+vector<string> read_file_up_to(string fileName, int numLines){
+    vector<string> parseFile = {};
+    string temp;
+    fstream myFile(fileName);
+    int numLinesInFile = check_number_of_lines(fileName);
+    int i = 0;
+    if (numLinesInFile < numLines) cout << "ERROR! archivo muy pequeño" << endl;
+    else{
+        while(getline(myFile,temp) && i < numLines) {
+            parseFile.push_back(temp);
+            i++;
+        }
+    }
+    
+    myFile.close();
+    return parseFile;
+
+}
+
+//Cuenta la cantidad de lineas en un archivo
+int check_number_of_lines(string fileName){
+    int num = 0;
+    string tempString;
+    ifstream file(fileName);
+
+    while(getline(file,tempString)) num++;
+
+    return num;
+
+}
+
+//Corta las lineas del archivo hasta las numLines lineas
+void cut_lines_up_to(string fileName, int numLines){
+    vector<string> tempLines = {};
+    if(filesystem::file_size(fileName) < numLines) cout << "Error! Archivo muy pequeño" << endl;
+    else{
+        tempLines = read_file_up_to(fileName,numLines);
+        erase_file_contents(fileName);
+        for (string i : tempLines) add_line_to_file(fileName,i + "\n");
+    }
+}
+
 //Agrega linea a archivo (line tiene que tener un "\n" al final)
 void add_line_to_file(string fileName, string line){
     fstream myFile;

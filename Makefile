@@ -10,6 +10,7 @@ SRCS_PLANIFICADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp s
 SRCS_DISTRIBUIDOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_distribuidor.cpp distribuidor.cpp
 SRCS_CORE = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_core.cpp core.cpp
 SRCS_BUSCADOR = src/func_string.cpp src/file_operation.cpp buscador.cpp 
+SRCS_CACHE = src/func_string.cpp src/file_operation.cpp cache.cpp
 
 OBJS_PROG = $(SRCS_PROG:src/%.cpp=obj/%.o)
 OBJS_CONTAR = $(SRCS_CONTAR:src/%.cpp=obj/%.o)
@@ -20,6 +21,7 @@ OBJS_PLANIFICADOR = $(SRCS_PLANIFICADOR:src/%.cpp=obj/%.o)
 OBJS_DISTRIBUIDOR = $(SRCS_DISTRIBUIDOR:src/%.cpp=obj/%.o)
 OBJS_CORE = $(SRCS_CORE:src/%.cpp=obj/%.o)
 OBJS_BUSCADOR = $(SRCS_BUSCADOR:src/%.cpp=obj/%.o)
+OBJS_CACHE = $(SRCS_CACHE:src/%.cpp=obj/%.o)
 
 TARGET_PROG = prog
 TARGET_CONTAR = contar_palabras
@@ -30,8 +32,9 @@ TARGET_PLANIFICADOR = planificador
 TARGET_DISTRIBUIDOR = distribuidor
 TARGET_CORE = core
 TARGET_BUSCADOR = buscador
+TARGET_CACHE = cache
 
-all: $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE) $(TARGET_BUSCADOR)
+all: $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE) $(TARGET_BUSCADOR) $(TARGET_CACHE)
 
 $(TARGET_PROG): $(OBJS_PROG)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_PROG)
@@ -60,11 +63,14 @@ $(TARGET_CORE): $(OBJS_CORE)
 $(TARGET_BUSCADOR): $(OBJS_BUSCADOR)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_BUSCADOR)
 
+$(TARGET_CACHE): $(OBJS_CACHE)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS_CACHE)
+
 obj/%.o: src/%.cpp
 	@mkdir -p obj
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f obj/*.o $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE) $(TARGET_BUSCADOR)
+	rm -f obj/*.o $(TARGET_PROG) $(TARGET_CONTAR) $(TARGET_PARALLELO) $(TARGET_INVERTIR) $(TARGET_EJECUTADOR) $(TARGET_PLANIFICADOR) $(TARGET_DISTRIBUIDOR) $(TARGET_CORE) $(TARGET_BUSCADOR) $(TARGET_CACHE)
 
 .PHONY: all clean

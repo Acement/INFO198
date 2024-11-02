@@ -9,6 +9,8 @@ int main(){
     bool keepSearching = true;
     string search;
     string searchNormal; //La frase a buscar normalizada
+
+    vector<string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
     
     cout << "PID PROCESO: " << getpid() << endl;
     cout << "Iniciando Buscador" << endl << endl;
