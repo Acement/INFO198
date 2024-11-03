@@ -52,6 +52,8 @@ int check_number_of_lines(string fileName){
 
     while(getline(file,tempString)) num++;
 
+    file.close();
+
     return num;
 
 }
@@ -59,7 +61,7 @@ int check_number_of_lines(string fileName){
 //Corta las lineas del archivo hasta las numLines lineas
 void cut_lines_up_to(string fileName, int numLines){
     vector<string> tempLines = {};
-    if(filesystem::file_size(fileName) < numLines) cout << "Error! Archivo muy pequeño" << endl;
+    if(check_number_of_lines(fileName) < numLines) cout << "Error! Archivo muy pequeño" << endl;
     else{
         tempLines = read_file_up_to(fileName,numLines);
         erase_file_contents(fileName);

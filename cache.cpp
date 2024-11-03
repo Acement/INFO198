@@ -46,6 +46,16 @@ void add_cache_lines(string cachePath, string indexPath, int numLines){
     return;
 }
 
+//Se guarda replaceLine en la primera posicion del cache y elimina la ultima
+void replace_in_cache(string cachePath, string replaceLine){
+    vector<string> tempCacheVector = read_file(cachePath);
+    vector<string> cacheIn = {replaceLine};
+    for(string i : tempCacheVector) cacheIn.push_back(i);
+    cacheIn.pop_back();
+    erase_file_contents(cachePath);
+    for(string i : cacheIn) add_line_to_file(cachePath,i);
+}
+
 
 int main(){
     /*
@@ -56,16 +66,55 @@ int main(){
     string cachePath = getenv("CACHE_FILE");
     string indexPath = getenv("INVERTED_INDEX");
     int numCacheLines = check_number_of_lines(cachePath);
+    vector<string> readCache;
+    vector<string> found = {};
+    vector<string> tempSearchVector;
+    string indexSearch = "";
 
     //Crea o completa el archivo cache usando las primeras MAX_SIZE lineas del indice que no se encuentren el el archivo cache
     if(numCacheLines == 0) add_cache_lines_from_empty(cachePath,indexPath,numLines);
     else if (numCacheLines < numLines) add_cache_lines(cachePath,indexPath,numLines);
     else if (numCacheLines > numLines) cut_lines_up_to(cachePath,numLines);
-    else cout << "CARGANDO CACHE" << endl;
+    else cout << "No se ha modificado el cache" << endl;
 
-    /*
-    Aca va la busqueda y el reemplazo si esque no lo pilla en el cache
-    */
+    cout << "CARGANDO CACHE..." << endl << endl;
+    readCache = read_file(cachePath);
+
+    string frase;
+    vector<string> splitedInput = {};
+    cout  << "Ingrese frase (sin caracteres especiales):";
+    getline(cin,frase); 
+    //Cierra el cache
+    if(frase == "salir ahora"){
+        /*
+        Cerrar MOTOR DE BUSQUEDA
+        */
+        return 0;
+    }else{
+        splitedInput = split(frase," ");
+
+        //Busca cada palabra de la frase
+        for(string i : splitedInput){
+            for(string j : readCache){
+                tempSearchVector = split(j,";");
+                //Si lo encuentra en el cache
+                if(i == tempSearchVector[0]) {
+                    found.push_back(j);
+                    break;
+                }else if(i != tempSearchVector[0] && j == readCache.back()){//Si no lo encuentra en el cache
+                    /*
+                    Aca va a buscar al motor de busqueda, guardandolo en indexSearch
+                    */
+                    if(indexSearch.length() == 0) cout << "No se encontro la palabra " << i << endl;
+                    else{
+                        replace_in_cache(cachePath,indexSearch);  
+                        found.push_back(indexSearch);
+                    }
+                }
+            }
+        }
+    }
+
     
 
     return 0;
