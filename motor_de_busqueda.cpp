@@ -37,9 +37,11 @@ void handleClient(int clientSocket) {
         bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
         buffer[bytesRead] = '\0';
         cout <<"MOTOR: " << buffer << endl;
-        if (buffer == "salir ahora") {
+        respuesta = buffer;
+        if (respuesta == "salir_ahora") {
             cout << "MOTOR SALIENDO..." << endl;
             continua = false;
+            
             
         }else{
             respuesta = search_index(buffer);
@@ -47,8 +49,10 @@ void handleClient(int clientSocket) {
         }
 
     }
-    cout << "Motor Stop " << endl;
+    
     close(clientSocket); // Cerrar el socket del cliente al recibir la opción de salida
+    cout << "Motor Stop " << endl;
+    exit(0);
 }
 
 int main(){
@@ -58,6 +62,10 @@ int main(){
     */
    const int opt = 1;
    int PORT_MOTOR = std::stoi(getenv("MOTOR_PORT"));
+   bool check = true;
+
+   cout << "MOTOR: PORT: " << PORT_MOTOR << endl;
+   cout << "MOTOR: PID: " << getpid() << endl;
 
    // Crear socket de servidor
     int serverSocket, clientSocket;
@@ -65,11 +73,12 @@ int main(){
     socklen_t clientAddrLen = sizeof(clientAddr);
     
     serverSocket = socket(AF_INET, SOCK_STREAM, 0); 
+    setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     if (serverSocket == -1) {
         perror("Error al crear el socket del servidor");
         exit(EXIT_FAILURE);
     }
-    setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    
 
     // Configurar dirección del servidor
     memset(&serverAddr, 0, sizeof(serverAddr));
@@ -90,10 +99,9 @@ int main(){
         close(serverSocket);
         exit(EXIT_FAILURE);
     }
-
     cout << "MOTOR: Esperando conexiones entrantes..." << endl;
 
-    while (true) {
+    while (check) {
         // Aceptar conexion entrante
         clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientAddrLen);
         if (clientSocket == -1) {
@@ -105,8 +113,9 @@ int main(){
         // Crear un nuevo hilo para manejar la conexión del cliente (solucion a desconexiones automaticas y caidas)
         thread(handleClient, clientSocket).detach(); 
         
+        
     }
 
-
+    
     return 0;
 }

@@ -75,6 +75,7 @@ int main(){
     vector <string> splitedSearch = {};
     vector <string> recievedSearch = {};
     vector<string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
+    string recievedMessage = "";
     
     cout << "PID PROCESO: " << getpid() << endl;
     cout << "Iniciando Buscador" << endl << endl;
@@ -84,28 +85,34 @@ int main(){
     do{
         cout << "Ingrese busqueda: ";
         getline(cin,search);
-        cout << search << endl;
         
 
         for (int i = 0; i < search.length(); i++){
             searchNormal += tolower(search[i]); //Normaliza la entrada
         }
-        cout << searchNormal << endl;
         if(searchNormal == "salir ahora") {
             cout << "SALIENDO..." << endl;
-            sendMessage(cacheSocket,searchNormal);
+            sendMessage(cacheSocket,"salir_ahora");
             keepSearching = false;
+            sleep(2);
         } 
         else{
-            splitedSearch = split(searchNormal," ");
-            for(string i : splitedSearch){
-                sendMessage(cacheSocket,i);
-                recievedSearch.push_back(recieveMessage(cacheSocket));
-            }
+            
+            cout << "BUSQ: enviando a cache: " << searchNormal << endl;
+            sendMessage(cacheSocket,searchNormal);
+
+            do{
+                recievedMessage = recieveMessage(cacheSocket);
+                if(recievedMessage != "check") recievedSearch.push_back(recievedMessage);
+            }while (recievedMessage != "check");    
+            
+        }
+
+        print_separation();
+        for(string i : recievedSearch) cout << i << endl; 
             /*
             Imprime resultados
             */
-        }
         searchNormal = ""; //Resetea la variable
     }while (keepSearching);
 

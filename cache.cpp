@@ -86,7 +86,7 @@ int connectServer(const string& serverIP, int serverPort) {
 
 // Función para enviar un mensaje al servidor
 void sendMessage(int clientSocket, const string& message) {
-    cout << "Enviando mensaje al servidor..." << endl;
+    cout << "CACHE: Enviando mensaje al servidor: " <<  message << endl;
     send(clientSocket, message.c_str(), message.length(), 0);
 }
 
@@ -112,10 +112,17 @@ string send_message_motor(string message){
 
     int clientSocket = connectServer(IP_SERVER, PORT_MOTOR); // Conectar al servidor
     bool continua = true;
-    sendMessage(clientSocket,message);
 
-    return receiveMessage(clientSocket);
+    if (message == "salir_ahora"){
+        sendMessage(clientSocket,"salir_ahora");
+        return "";
+    }else{
+         sendMessage(clientSocket,message);
+
+        return receiveMessage(clientSocket);
+    }   
 }
+   
 
 //Funcion Busqueda
 string wordSearch(string search,vector<string> readCache){
@@ -150,28 +157,37 @@ void handleClient(int clientSocket,vector<string> readCache) {
     ssize_t bytesRead;
     string respuesta;
     bool continua = true;
+    vector<string> splitedBuffer = {};
+    string checker = "check";
     // Bucle para manejar las opciones del cliente
     while (continua) {
         bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
         buffer[bytesRead] = '\0';
         cout << "CACHE: " << buffer << endl;
-        if (buffer == "salir ahora") {
-            respuesta = buffer;
-            continua = false;
-            send_message_motor(respuesta);
-
+        respuesta = buffer;
+        if (respuesta == "salir_ahora") {
             cout << "CACHE SALIENDO ..." << endl;
-            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+            
+            send_message_motor("salir_ahora");
+            
+            sleep(1);
+            continua = false;
+            
             
         }else{
-            respuesta = wordSearch(buffer,readCache);
-            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+            splitedBuffer = split(buffer, " ");
+            for (string i : splitedBuffer){
+                respuesta = wordSearch(i,readCache);
+                send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+            }
+            send(clientSocket, checker.c_str() , checker.length(), 0);
         }
         
         
     }
-    cout << "Cache Stop " << endl;
     close(clientSocket); // Cerrar el socket del cliente al recibir la opción de salida
+    cout << "Cache Stop " << endl;
+    exit(0);
 }
 
 
@@ -201,18 +217,21 @@ int main(){
     //Variables de cache
     int CACHE_PORT = std::stoi(getenv("CACHE_PORT"));
     cout << "CACHE: PORT: " << CACHE_PORT << endl;
+    cout << "CACHE: PID: " << getpid() << endl;
 
     int cacheCLientSocket, cacheServerSocket;
+
     struct sockaddr_in cacheServerAddr, cacheClientAddr;
     socklen_t cacheClientAddrLen = sizeof(cacheClientAddr);
 
         //Crea el socket del servidor
-    cacheServerSocket = socket(AF_INET, SOCK_STREAM, 0); 
+    cacheServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+    setsockopt(cacheServerSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     if (cacheServerSocket == -1) {
         perror("Error al crear el socket del servidor");
         exit(EXIT_FAILURE);
     }
-    setsockopt(cacheServerSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    
 
         //Enlaza la direccion al socket
     memset(&cacheServerAddr, 0, sizeof(cacheServerAddr));
@@ -253,6 +272,7 @@ int main(){
         
     }
     
+    exit(0);
 
     return 0;
 }
