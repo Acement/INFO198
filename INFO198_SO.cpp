@@ -15,7 +15,6 @@ using namespace std;
 
 //Realiza la accion para la opcion elegida y repite el menu hasta salir
 void execute(bool check, string textIn, string numVect, string num,string user, bool admin, string userFilePath){
-
   int opt;
   float numf;
   bool checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
@@ -24,6 +23,10 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
 
   if (fork() == 0) {
             execl("./cache", "cache", NULL);
+  }
+  sleep(1);
+  if (fork() == 0) {
+            execl("./motor", "motor", NULL);
   }
   sleep(1);
 
@@ -265,18 +268,18 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           break;
         }
         //20.Buscador
-        case 20:
+        case 20:{
+
+        
+          print_separation();
           cout << "Opcion 20" << endl;
           
 
-         /* if (fork() == 0) {
-            execl("./motor", "motor", NULL);
-          }*/
+         
 
           // Esperar un breve periodo para asegurar que CACHE y MOTOR_DE_BÚSQUEDA estén listos
-          sleep(2);
 
-          pid = fork(); //Crear un proceso hijo
+          pid_t pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 
             execl("./buscador","buscador",NULL);
             exit(0); 
@@ -291,8 +294,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
           cout << "\nPresione ENTER para continuar...";
           getc(stdin);
           getc(stdin);
-          break;
-        break;
+        break;}
         //98.Lista de usuarios
         case 98:
           print_separation();

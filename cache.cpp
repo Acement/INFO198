@@ -126,9 +126,11 @@ string wordSearch(string search,vector<string> readCache){
         tempSearchVector = split(j,";");
         //Si lo encuentra en el cache
         if(search == tempSearchVector[0]) {
+            cout << "CACHE" << endl;
             return j;
             break;
         }else if(search != tempSearchVector[0] && j == readCache.back()){//Si no lo encuentra en el cache
+            cout << "Mandando a motor" << endl;
             indexSearch = send_message_motor(search);
             if(indexSearch.length() == 0) {
                 cout << "No se encontro la palabra " << search << endl;
@@ -152,11 +154,15 @@ void handleClient(int clientSocket,vector<string> readCache) {
     while (continua) {
         bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
         buffer[bytesRead] = '\0';
-        cout << buffer << endl;
+        cout << "CACHE: " << buffer << endl;
         if (buffer == "salir ahora") {
             respuesta = buffer;
-            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
             continua = false;
+            send_message_motor(respuesta);
+
+            cout << "CACHE SALIENDO ..." << endl;
+            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+            
         }else{
             respuesta = wordSearch(buffer,readCache);
             send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
@@ -173,6 +179,7 @@ void handleClient(int clientSocket,vector<string> readCache) {
 int main(){
 
     //Operaciones del cache
+    const int opt = 1;
     int numLines = stoi(getenv("MAX_SIZE"));
     string cachePath = getenv("CACHE_FILE");
     string indexPath = getenv("INVERTED_INDEX");
@@ -205,12 +212,22 @@ int main(){
         perror("Error al crear el socket del servidor");
         exit(EXIT_FAILURE);
     }
+    setsockopt(cacheServerSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
         //Enlaza la direccion al socket
     memset(&cacheServerAddr, 0, sizeof(cacheServerAddr));
     cacheServerAddr.sin_family = AF_INET;
     cacheServerAddr.sin_port = htons(CACHE_PORT); // Puerto del servidor
     cacheServerAddr.sin_addr.s_addr = INADDR_ANY;
+
+    // Enlazamos socket a dirección del servidor
+    
+    if (bind(cacheServerSocket, (struct sockaddr *)&cacheServerAddr, sizeof(cacheServerAddr)) == -1) {
+        perror("Error al enlazar el socket");
+        close(cacheServerSocket);
+        exit(EXIT_FAILURE);
+    }
+
 
     // Escuchar conexiones entrantes
     if (listen(cacheServerSocket, 5) == -1) {

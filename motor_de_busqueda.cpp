@@ -36,13 +36,14 @@ void handleClient(int clientSocket) {
     while (continua) {
         bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
         buffer[bytesRead] = '\0';
-        cout << buffer << endl;
+        cout <<"MOTOR: " << buffer << endl;
         if (buffer == "salir ahora") {
+            cout << "MOTOR SALIENDO..." << endl;
             continua = false;
+            
         }else{
             respuesta = search_index(buffer);
             send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
-        
         }
 
     }
@@ -55,6 +56,7 @@ int main(){
     Aca va la parte socket
     tiene que escuchar(servidor)
     */
+   const int opt = 1;
    int PORT_MOTOR = std::stoi(getenv("MOTOR_PORT"));
 
    // Crear socket de servidor
@@ -67,6 +69,7 @@ int main(){
         perror("Error al crear el socket del servidor");
         exit(EXIT_FAILURE);
     }
+    setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
     // Configurar dirección del servidor
     memset(&serverAddr, 0, sizeof(serverAddr));

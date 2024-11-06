@@ -80,6 +80,7 @@ int main(){
     cout << "Iniciando Buscador" << endl << endl;
     cout << "Conectando al servidor" << endl;
     int cacheSocket = connectServer(IP_SERVER,PORT);
+    sleep(1);
     do{
         cout << "Ingrese busqueda: ";
         getline(cin,search);
@@ -94,7 +95,6 @@ int main(){
             cout << "SALIENDO..." << endl;
             sendMessage(cacheSocket,searchNormal);
             keepSearching = false;
-            recieveMessage(cacheSocket);
         } 
         else{
             splitedSearch = split(searchNormal," ");
