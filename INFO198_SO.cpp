@@ -22,6 +22,13 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
   vector<int>numVectSplit = {};
   pid_t pid;
 
+  if (fork() == 0) {
+            execl("./cache", "cache", NULL);
+  }
+  sleep(1);
+
+
+
   //Variables para pasar como argumento a opcion 9 (Analisis de performance)
   string rep = getenv("REPETICIONES");
   string threadArray = getenv("ARRAY_THREADS");
@@ -260,6 +267,14 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         //20.Buscador
         case 20:
           cout << "Opcion 20" << endl;
+          
+
+         /* if (fork() == 0) {
+            execl("./motor", "motor", NULL);
+          }*/
+
+          // Esperar un breve periodo para asegurar que CACHE y MOTOR_DE_BÚSQUEDA estén listos
+          sleep(2);
 
           pid = fork(); //Crear un proceso hijo
           if (pid == 0) { 

@@ -1,4 +1,7 @@
 #include <iostream>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <thread>
 
 #include "common.h"
 #include "file_operation.h"
@@ -56,20 +59,125 @@ void replace_in_cache(string cachePath, string replaceLine){
     for(string i : cacheIn) add_line_to_file(cachePath,i);
 }
 
+// Función para conectar al servidor
+int connectServer(const string& serverIP, int serverPort) {
+    int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientSocket == -1) {
+        perror("Error al crear el socket del cliente");
+        exit(EXIT_FAILURE);
+    }
+    // Configurar la dirección del servidor
+    struct sockaddr_in serverAddr;
+    memset(&serverAddr, 0, sizeof(serverAddr));
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(serverPort);
+    serverAddr.sin_addr.s_addr = inet_addr(serverIP.c_str());
+    // Conectar al servidor y verificar errores
+    if (connect(clientSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
+        perror("CACHE:Error al conectar al servidor");
+        close(clientSocket);
+        exit(EXIT_FAILURE);
+    }
+
+    cout << "Conectado al servidor." << endl;
+    // Retornar el socket del cliente al servidor
+    return clientSocket;
+}
+
+// Función para enviar un mensaje al servidor
+void sendMessage(int clientSocket, const string& message) {
+    cout << "Enviando mensaje al servidor..." << endl;
+    send(clientSocket, message.c_str(), message.length(), 0);
+}
+
+// Función para recibir y mostrar un mensaje del servidor
+string receiveMessage(int clientSocket) {
+    char buffer[1024];
+    ssize_t bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+    if (bytesRead == -1) {
+        perror("Error al recibir datos del servidor");
+        close(clientSocket);
+        exit(EXIT_FAILURE);
+    } else if (bytesRead > 0) {
+        buffer[bytesRead] = '\0';
+        cout << "Respuesta del servidor:\n" << buffer << endl;
+    }
+    return buffer;
+}
+
+//Envia el mensaje al motor
+string send_message_motor(string message){
+    int PORT_MOTOR = std::stoi(getenv("MOTOR_PORT"));
+    const char* IP_SERVER = getenv("IP_SERVER");
+
+    int clientSocket = connectServer(IP_SERVER, PORT_MOTOR); // Conectar al servidor
+    bool continua = true;
+    sendMessage(clientSocket,message);
+
+    return receiveMessage(clientSocket);
+}
+
+//Funcion Busqueda
+string wordSearch(string search,vector<string> readCache){
+    vector<string> tempSearchVector = {};
+    string indexSearch;
+   
+    for(string j : readCache){
+        tempSearchVector = split(j,";");
+        //Si lo encuentra en el cache
+        if(search == tempSearchVector[0]) {
+            return j;
+            break;
+        }else if(search != tempSearchVector[0] && j == readCache.back()){//Si no lo encuentra en el cache
+            indexSearch = send_message_motor(search);
+            if(indexSearch.length() == 0) {
+                cout << "No se encontro la palabra " << search << endl;
+                return "No se encontro " + search;
+            }else{
+                replace_in_cache(getenv("CACHE_FILE"),indexSearch);  
+                return indexSearch;
+            }
+        }
+    }
+}
+
+
+// Funcion para manejar cada cliente entrante
+void handleClient(int clientSocket,vector<string> readCache) {
+    char buffer[1024];
+    ssize_t bytesRead;
+    string respuesta;
+    bool continua = true;
+    // Bucle para manejar las opciones del cliente
+    while (continua) {
+        bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+        buffer[bytesRead] = '\0';
+        cout << buffer << endl;
+        if (buffer == "salir ahora") {
+            respuesta = buffer;
+            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+            continua = false;
+        }else{
+            respuesta = wordSearch(buffer,readCache);
+            send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+        }
+        
+        
+    }
+    cout << "Cache Stop " << endl;
+    close(clientSocket); // Cerrar el socket del cliente al recibir la opción de salida
+}
+
+
 
 int main(){
-    /*
-    Aca va la parte servidor/socket
-    */
 
+    //Operaciones del cache
     int numLines = stoi(getenv("MAX_SIZE"));
     string cachePath = getenv("CACHE_FILE");
     string indexPath = getenv("INVERTED_INDEX");
     int numCacheLines = check_number_of_lines(cachePath);
     vector<string> readCache;
-    vector<string> found = {};
-    vector<string> tempSearchVector;
-    string indexSearch = "";
 
     //Crea o completa el archivo cache usando las primeras MAX_SIZE lineas del indice que no se encuentren el el archivo cache
     if(numCacheLines == 0) add_cache_lines_from_empty(cachePath,indexPath,numLines);
@@ -79,42 +187,54 @@ int main(){
 
     cout << "CARGANDO CACHE..." << endl << endl;
     readCache = read_file(cachePath);
+    /*
+    Aca va la parte servidor/socket
+    tiene parte escucha y parte envia(servidor/cliente)
+    */
+    //Variables de cache
+    int CACHE_PORT = std::stoi(getenv("CACHE_PORT"));
+    cout << "CACHE: PORT: " << CACHE_PORT << endl;
 
-    string frase;
-    vector<string> splitedInput = {};
-    cout  << "Ingrese frase (sin caracteres especiales):";
-    getline(cin,frase); 
-    //Cierra el cache
-    if(frase == "salir ahora"){
-        /*
-        Cerrar MOTOR DE BUSQUEDA
-        */
-        return 0;
-    }else{
-        splitedInput = split(frase," ");
+    int cacheCLientSocket, cacheServerSocket;
+    struct sockaddr_in cacheServerAddr, cacheClientAddr;
+    socklen_t cacheClientAddrLen = sizeof(cacheClientAddr);
 
-        //Busca cada palabra de la frase
-        for(string i : splitedInput){
-            for(string j : readCache){
-                tempSearchVector = split(j,";");
-                //Si lo encuentra en el cache
-                if(i == tempSearchVector[0]) {
-                    found.push_back(j);
-                    break;
-                }else if(i != tempSearchVector[0] && j == readCache.back()){//Si no lo encuentra en el cache
-                    /*
-                    Aca va a buscar al motor de busqueda, guardandolo en indexSearch
-                    */
-                    if(indexSearch.length() == 0) cout << "No se encontro la palabra " << i << endl;
-                    else{
-                        replace_in_cache(cachePath,indexSearch);  
-                        found.push_back(indexSearch);
-                    }
-                }
-            }
-        }
+        //Crea el socket del servidor
+    cacheServerSocket = socket(AF_INET, SOCK_STREAM, 0); 
+    if (cacheServerSocket == -1) {
+        perror("Error al crear el socket del servidor");
+        exit(EXIT_FAILURE);
     }
 
+        //Enlaza la direccion al socket
+    memset(&cacheServerAddr, 0, sizeof(cacheServerAddr));
+    cacheServerAddr.sin_family = AF_INET;
+    cacheServerAddr.sin_port = htons(CACHE_PORT); // Puerto del servidor
+    cacheServerAddr.sin_addr.s_addr = INADDR_ANY;
+
+    // Escuchar conexiones entrantes
+    if (listen(cacheServerSocket, 5) == -1) {
+        perror("Error al escuchar");
+        close(cacheServerSocket);
+        exit(EXIT_FAILURE);
+    }
+
+    cout << "CACHE: Esperando conexiones entrantes..." << endl;
+
+    while (true) {
+        // Aceptar conexion entrante
+        cacheCLientSocket = accept(cacheServerSocket, (struct sockaddr *)&cacheClientAddr, &cacheClientAddrLen);
+        cout << "socket aceptado" << endl;
+        if (cacheCLientSocket == -1) {
+            perror("Error al aceptar la conexión");
+            continue; // Continuar esperando conexiones
+        }
+
+        cout << "Cliente conectado" << endl;
+        // Crear un nuevo hilo para manejar la conexión del cliente (solucion a desconexiones automaticas y caidas)
+        thread(handleClient, cacheCLientSocket,readCache).detach(); 
+        
+    }
     
 
     return 0;
