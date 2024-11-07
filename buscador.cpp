@@ -14,10 +14,10 @@ int connectServer(const string& serverIP, int serverPort) {
     cout << "PUERTO: " << serverPort << endl;
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == -1) {
-        perror("Error al crear el socket del cliente");
+        perror("BUSC:Error al crear el socket del cliente");
         exit(EXIT_FAILURE);
     }
-    cout << "socket creado" << endl;
+    cout << "BUSC:socket creado" << endl;
     // Configurar la dirección del servidor
     struct sockaddr_in serverAddr;
     memset(&serverAddr, 0, sizeof(serverAddr));
@@ -26,35 +26,37 @@ int connectServer(const string& serverIP, int serverPort) {
     serverAddr.sin_addr.s_addr = inet_addr(serverIP.c_str());
     // Conectar al servidor y verificar errores
     if (connect(clientSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
-        perror("BUSCADOR: Error al conectar al servidor");
+        perror("BUSC: Error al conectar al servidor");
         close(clientSocket);
         exit(EXIT_FAILURE);
     }
 
-    cout << "Conectado al servidor." << endl;
+    cout << "BUSC:Conectado al servidor." << endl;
     // Retornar el socket del cliente al servidor
     return clientSocket;
 }
 
 //Envia mensaje (Sacado del ejemplo del ayudante)
 void sendMessage(int clientSocket, const string& message) {
-    cout << "Enviando mensaje al servidor..." << endl;
+    cout << "BUSC:Enviando mensaje al servidor..." << endl;
     send(clientSocket, message.c_str(), message.length(), 0);
 }
 
 // Función para recibir y mostrar un mensaje del servidor (Sacado del ejemplo del ayudante)
 string recieveMessage(int clientSocket) {
     char buffer[1024];
+    string respuesta;
     ssize_t bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
     if (bytesRead == -1) {
-        perror("Error al recibir datos del servidor");
+        perror("BUSC:Error al recibir datos del servidor");
         close(clientSocket);
         exit(EXIT_FAILURE);
     } else if (bytesRead > 0) {
         buffer[bytesRead] = '\0';
-        cout << "Respuesta del servidor:\n" << buffer << endl;
+        //cout << "BUSC:Respuesta del servidor:\n" << buffer << endl;
+        respuesta = buffer;
     }
-    return buffer;
+    return respuesta;
 }
 
 int main(){
@@ -94,7 +96,7 @@ int main(){
             cout << "SALIENDO..." << endl;
             sendMessage(cacheSocket,"salir_ahora");
             keepSearching = false;
-            sleep(2);
+            sleep(1);
         } 
         else{
             
@@ -103,6 +105,7 @@ int main(){
 
             do{
                 recievedMessage = recieveMessage(cacheSocket);
+                cout << "BUSQ: mensaje recibido: " << recievedMessage << endl;
                 if(recievedMessage != "check") recievedSearch.push_back(recievedMessage);
             }while (recievedMessage != "check");    
             
@@ -111,9 +114,10 @@ int main(){
         print_separation();
         for(string i : recievedSearch) cout << i << endl; 
             /*
-            Imprime resultados
+            Imprime resultados, podrias limpiar el recievedSearch depues de calcular el puntaje
             */
         searchNormal = ""; //Resetea la variable
+        
     }while (keepSearching);
 
     return 0;

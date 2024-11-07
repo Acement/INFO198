@@ -56,14 +56,28 @@ void replace_in_cache(string cachePath, string replaceLine){
     for(string i : tempCacheVector) cacheIn.push_back(i);
     cacheIn.pop_back();
     erase_file_contents(cachePath);
-    for(string i : cacheIn) add_line_to_file(cachePath,i);
+    for(string i : cacheIn) add_line_to_file(cachePath,i + "\n");
+}
+
+//Busca en el cache
+string search_in_cache(string search){
+    string cachePath = getenv("CACHE_FILE");
+    vector <string> readCache = read_file(cachePath);
+    vector <string> splitedReadCache = {};
+
+    for(string i : readCache){
+        splitedReadCache = split(i,";");
+        cout << "CACHE: Linea de cache: " << i << endl;
+        if (search == splitedReadCache[0]) return i;
+    }
+    return "";
 }
 
 // Función para conectar al servidor
 int connectServer(const string& serverIP, int serverPort) {
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == -1) {
-        perror("Error al crear el socket del cliente");
+        perror("CACHE: Error al crear el socket del cliente");
         exit(EXIT_FAILURE);
     }
     // Configurar la dirección del servidor
@@ -79,7 +93,7 @@ int connectServer(const string& serverIP, int serverPort) {
         exit(EXIT_FAILURE);
     }
 
-    cout << "Conectado al servidor." << endl;
+    cout << "CACHE: Conectado al servidor." << endl;
     // Retornar el socket del cliente al servidor
     return clientSocket;
 }
@@ -95,12 +109,12 @@ string receiveMessage(int clientSocket) {
     char buffer[1024];
     ssize_t bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
     if (bytesRead == -1) {
-        perror("Error al recibir datos del servidor");
+        perror("CACHE:Error al recibir datos del servidor");
         close(clientSocket);
         exit(EXIT_FAILURE);
     } else if (bytesRead > 0) {
         buffer[bytesRead] = '\0';
-        cout << "Respuesta del servidor:\n" << buffer << endl;
+        cout << "CACHE: Respuesta del servidor: " << buffer << endl;
     }
     return buffer;
 }
@@ -109,53 +123,48 @@ string receiveMessage(int clientSocket) {
 string send_message_motor(string message){
     int PORT_MOTOR = std::stoi(getenv("MOTOR_PORT"));
     const char* IP_SERVER = getenv("IP_SERVER");
+    string temp;
 
     int clientSocket = connectServer(IP_SERVER, PORT_MOTOR); // Conectar al servidor
-    bool continua = true;
+
 
     if (message == "salir_ahora"){
         sendMessage(clientSocket,"salir_ahora");
         return "";
     }else{
-         sendMessage(clientSocket,message);
+        sendMessage(clientSocket,message);
 
-        return receiveMessage(clientSocket);
+        temp = receiveMessage(clientSocket);
+
+        return temp;
     }   
 }
    
 
 //Funcion Busqueda
-string wordSearch(string search,vector<string> readCache){
+string wordSearch(string search){
     vector<string> tempSearchVector = {};
     string indexSearch;
-   
-    for(string j : readCache){
-        tempSearchVector = split(j,";");
-        //Si lo encuentra en el cache
-        if(search == tempSearchVector[0]) {
-            cout << "CACHE" << endl;
-            return j;
-            break;
-        }else if(search != tempSearchVector[0] && j == readCache.back()){//Si no lo encuentra en el cache
-            cout << "Mandando a motor" << endl;
-            indexSearch = send_message_motor(search);
-            if(indexSearch.length() == 0) {
-                cout << "No se encontro la palabra " << search << endl;
-                return "No se encontro " + search;
-            }else{
-                replace_in_cache(getenv("CACHE_FILE"),indexSearch);  
-                return indexSearch;
-            }
-        }
-    }
+    string temp;
+    temp = search_in_cache(search);
+    if(temp.length() == 0){//Si no lo encuentra en el cache
+        cout << "CACHE: Mandando a motor" << endl;
+        indexSearch = send_message_motor(search);
+        cout << "CACHE: indexSearch: " << indexSearch << endl;
+        replace_in_cache(getenv("CACHE_FILE"),indexSearch);  
+        return indexSearch;
+    }else return temp;
+
+    return "ERROR!!";
 }
 
 
 // Funcion para manejar cada cliente entrante
-void handleClient(int clientSocket,vector<string> readCache) {
+void handleClient(int clientSocket) {
     char buffer[1024];
     ssize_t bytesRead;
     string respuesta;
+    string recievedMessage;
     bool continua = true;
     vector<string> splitedBuffer = {};
     string checker = "check";
@@ -175,10 +184,14 @@ void handleClient(int clientSocket,vector<string> readCache) {
             
             
         }else{
-            splitedBuffer = split(buffer, " ");
+            splitedBuffer = split(respuesta, " ");
             for (string i : splitedBuffer){
-                respuesta = wordSearch(i,readCache);
-                send(clientSocket, respuesta.c_str(), respuesta.length(), 0);
+                cout << "CACHE: Buscando " << i << endl;
+                recievedMessage = wordSearch(i);
+                cout << "CACHE: Busqueda realizada: " << recievedMessage << endl;
+                send(clientSocket, recievedMessage.c_str(), recievedMessage.length(), 0);
+                recievedMessage = "";
+                sleep(0.5);
             }
             send(clientSocket, checker.c_str() , checker.length(), 0);
         }
@@ -206,7 +219,7 @@ int main(){
     if(numCacheLines == 0) add_cache_lines_from_empty(cachePath,indexPath,numLines);
     else if (numCacheLines < numLines) add_cache_lines(cachePath,indexPath,numLines);
     else if (numCacheLines > numLines) cut_lines_up_to(cachePath,numLines);
-    else cout << "No se ha modificado el cache" << endl;
+    else cout << "CACHE:No se ha modificado el cache" << endl;
 
     cout << "CARGANDO CACHE..." << endl << endl;
     readCache = read_file(cachePath);
@@ -228,7 +241,7 @@ int main(){
     cacheServerSocket = socket(AF_INET, SOCK_STREAM, 0);
     setsockopt(cacheServerSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     if (cacheServerSocket == -1) {
-        perror("Error al crear el socket del servidor");
+        perror("CACHE:Error al crear el socket del servidor");
         exit(EXIT_FAILURE);
     }
     
@@ -242,7 +255,7 @@ int main(){
     // Enlazamos socket a dirección del servidor
     
     if (bind(cacheServerSocket, (struct sockaddr *)&cacheServerAddr, sizeof(cacheServerAddr)) == -1) {
-        perror("Error al enlazar el socket");
+        perror("CACHE:Error al enlazar el socket");
         close(cacheServerSocket);
         exit(EXIT_FAILURE);
     }
@@ -250,7 +263,7 @@ int main(){
 
     // Escuchar conexiones entrantes
     if (listen(cacheServerSocket, 5) == -1) {
-        perror("Error al escuchar");
+        perror("CACHE:Error al escuchar");
         close(cacheServerSocket);
         exit(EXIT_FAILURE);
     }
@@ -260,19 +273,17 @@ int main(){
     while (true) {
         // Aceptar conexion entrante
         cacheCLientSocket = accept(cacheServerSocket, (struct sockaddr *)&cacheClientAddr, &cacheClientAddrLen);
-        cout << "socket aceptado" << endl;
+        cout << "CACHE:socket aceptado" << endl;
         if (cacheCLientSocket == -1) {
-            perror("Error al aceptar la conexión");
+            perror("CACHE:Error al aceptar la conexión");
             continue; // Continuar esperando conexiones
         }
 
-        cout << "Cliente conectado" << endl;
+        cout << "CACHE:Cliente conectado" << endl;
         // Crear un nuevo hilo para manejar la conexión del cliente (solucion a desconexiones automaticas y caidas)
-        thread(handleClient, cacheCLientSocket,readCache).detach(); 
+        thread(handleClient, cacheCLientSocket).detach(); 
         
     }
     
-    exit(0);
-
     return 0;
 }

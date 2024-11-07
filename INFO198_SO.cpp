@@ -20,6 +20,7 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
   bool checkIndex = input_output_file_check(getenv("INPUT_DIR"),getenv("OUTPUT_DIR")); //Flag temporal para crear indice invertido
   vector<int>numVectSplit = {};
   pid_t pid;
+  bool checkSearch = true;
 
   if (fork() == 0) {
             execl("./cache", "cache", NULL);
@@ -273,22 +274,27 @@ void execute(bool check, string textIn, string numVect, string num,string user, 
         
           print_separation();
           cout << "Opcion 20" << endl;
-          
+
 
          
 
           // Esperar un breve periodo para asegurar que CACHE y MOTOR_DE_BÚSQUEDA estén listos
-
-          pid_t pid = fork(); //Crear un proceso hijo
-          if (pid == 0) { 
-            execl("./buscador","buscador",NULL);
-            exit(0); 
-          }
-          else if (pid > 0) {
-            wait(NULL); 
-          } 
-          else {
-            cout<<"Error al crear el proceso"<<endl;
+          if(checkSearch == true){
+            pid_t pid = fork(); //Crear un proceso hijo
+            if (pid == 0) { 
+              execl("./buscador","buscador",NULL);
+              exit(0); 
+            }
+            else if (pid > 0) {
+              wait(NULL); 
+            } 
+            else {
+              cout<<"Error al crear el proceso"<<endl;
+            }
+            sleep(5);
+            checkSearch = false;
+          }else{
+            cout << "\nProcesos de buscador cerrados, No se puede realizar busqueda." << endl; 
           }
 
           cout << "\nPresione ENTER para continuar...";
