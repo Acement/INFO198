@@ -2,16 +2,16 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17 -I./include
 
 SRCS_PROG = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp INFO198_SO.cpp src/thread_operation.cpp src/env_setter.cpp 
-SRCS_CONTAR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp contar_palabras.cpp
-SRCS_PARALLEL = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp contar_paralelo.cpp
-SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp invertir_indice.cpp
-SRCS_EJECUTADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp ejecutador.cpp
-SRCS_PLANIFICADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_planificador.cpp planificador.cpp
-SRCS_DISTRIBUIDOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_distribuidor.cpp distribuidor.cpp
-SRCS_CORE = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_core.cpp core.cpp
-SRCS_BUSCADOR = src/func_string.cpp src/file_operation.cpp buscador.cpp 
-SRCS_CACHE = src/func_string.cpp src/file_operation.cpp cache.cpp
-SRCS_MOTOR = src/func_string.cpp src/file_operation.cpp motor_de_busqueda.cpp
+SRCS_CONTAR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp Procesos/contar_palabras.cpp
+SRCS_PARALLEL = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp Procesos/contar_paralelo.cpp
+SRCS_INVERTIR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp Procesos/invertir_indice.cpp
+SRCS_EJECUTADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/thread_operation.cpp src/env_setter.cpp Procesos/ejecutador.cpp
+SRCS_PLANIFICADOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_planificador.cpp Procesos/planificador.cpp
+SRCS_DISTRIBUIDOR = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_distribuidor.cpp Procesos/distribuidor.cpp
+SRCS_CORE = src/file_operation.cpp src/func_cont.cpp src/func_math.cpp src/func_string.cpp src/user_operation.cpp src/invertido.cpp src/env_setter.cpp src/func_core.cpp Procesos/core.cpp
+SRCS_BUSCADOR = src/func_string.cpp src/file_operation.cpp Procesos/buscador.cpp 
+SRCS_CACHE = src/func_string.cpp src/file_operation.cpp Procesos/cache.cpp
+SRCS_MOTOR = src/func_string.cpp src/file_operation.cpp Procesos/motor_de_busqueda.cpp
 
 OBJS_PROG = $(SRCS_PROG:src/%.cpp=obj/%.o)
 OBJS_CONTAR = $(SRCS_CONTAR:src/%.cpp=obj/%.o)
