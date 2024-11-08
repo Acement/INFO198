@@ -117,7 +117,7 @@ int main(){
             for(string i : recievedSearch) {
                 splitedSearch = split(i,";");
                 cout << splitedSearch[0] << ": ";
-                if(splitedSearch[1] != "No Se encontró"){
+                if(splitedSearch[1] != "No Se encontro"){
                     for(int j = 1; j < splitedSearch.size(); j++){
                         splitedSearch[j] = remove_character(splitedSearch[j],'(');
                         splitedSearch[j] = remove_character(splitedSearch[j],')');
