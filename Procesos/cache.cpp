@@ -209,7 +209,7 @@ int main(){
 
     //Operaciones del cache
     const int opt = 1;
-    int numLines = stoi(getenv("MAX_SIZE"));
+    int numLines = stoi(getenv("MEMORY_SIZE"));
     string cachePath = getenv("CACHE_FILE");
     string indexPath = getenv("INVERTED_INDEX");
     int numCacheLines = check_number_of_lines(cachePath);

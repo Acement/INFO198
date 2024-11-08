@@ -2,7 +2,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <tuple>
-
+#include <algorithm> 
 #include "common.h"
 #include "file_operation.h"
 #include "func_string.h"
@@ -117,7 +117,7 @@ int main(){
             for(string i : recievedSearch) {
                 splitedSearch = split(i,";");
                 cout << splitedSearch[0] << ": ";
-                if(splitedSearch[1] != "No Se encontro"){
+                if(splitedSearch[1] != "No Se encontró"){
                     for(int j = 1; j < splitedSearch.size(); j++){
                         splitedSearch[j] = remove_character(splitedSearch[j],'(');
                         splitedSearch[j] = remove_character(splitedSearch[j],')');
@@ -148,14 +148,15 @@ int main(){
                     cout << endl;
                 }
             }
-            for (tuple <int,int> i : addVector){
+            sort(addVector.begin(), addVector.end(), [](const tuple<int, int>& a, const tuple<int, int>& b) {
+                return get<1>(a) > get<1>(b); // Ordena de mayor a menor por el puntaj
+                });
+            // Imprime las tuplas ya ordenadas
+            for (const tuple<int, int>& i : addVector) {
                 cout << "ID libro: " << get<0>(i) << " Puntaje: " << get<1>(i) << endl;
             }
             
-        }       
-            /*
-            Imprime resultados, podrias limpiar el recievedSearch depues de calcular el puntaje
-            */
+        } 
         
         searchNormal = ""; //Resetea la variable
         addVector.clear();
