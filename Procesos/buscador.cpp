@@ -9,7 +9,7 @@
 
 using namespace std;
 
-//Conecta al servior (Sacado del ejemplo del ayudante)
+// Conecta al servidor
 int connectServer(const string& serverIP, int serverPort) {
     cout << "IP :" << serverIP << endl;
     cout << "PUERTO: " << serverPort << endl;
@@ -19,31 +19,30 @@ int connectServer(const string& serverIP, int serverPort) {
         exit(EXIT_FAILURE);
     }
     cout << "BUSC:socket creado" << endl;
-    // Configurar la dirección del servidor
+
     struct sockaddr_in serverAddr;
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(serverPort);
     serverAddr.sin_addr.s_addr = inet_addr(serverIP.c_str());
-    // Conectar al servidor y verificar errores
+
     if (connect(clientSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
         perror("BUSC: Error al conectar al servidor");
         close(clientSocket);
         exit(EXIT_FAILURE);
     }
-
     cout << "BUSC:Conectado al servidor." << endl;
-    // Retornar el socket del cliente al servidor
+
     return clientSocket;
 }
 
-//Envia mensaje (Sacado del ejemplo del ayudante)
+// Envía mensaje al servidor
 void sendMessage(int clientSocket, const string& message) {
     cout << "BUSC:Enviando mensaje al servidor..." << endl;
     send(clientSocket, message.c_str(), message.length(), 0);
 }
 
-// Función para recibir y mostrar un mensaje del servidor (Sacado del ejemplo del ayudante)
+// Recibe mensaje del servidor
 string recieveMessage(int clientSocket) {
     char buffer[1024];
     string respuesta;
@@ -54,114 +53,122 @@ string recieveMessage(int clientSocket) {
         exit(EXIT_FAILURE);
     } else if (bytesRead > 0) {
         buffer[bytesRead] = '\0';
-        //cout << "BUSC:Respuesta del servidor:\n" << buffer << endl;
         respuesta = buffer;
     }
     return respuesta;
 }
 
-int main(){
-    /*
-    aca va la parte socket
-    tiene parte envia(cliente)
-    */
+int main() {
     int PORT = std::stoi(getenv("CACHE_PORT"));
     const char* IP_SERVER = getenv("IP_SERVER"); 
     int topk = std::stoi(getenv("TOPK"));
-    
 
-    
-
-    //Parte envia mensaje
     bool keepSearching = true;
     string search;
-    string searchNormal; //La frase a buscar normalizada
-    vector <string> splitedSearch = {};
-    vector <string> recievedSearch = {};
-    vector <string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
+    string searchNormal;
+    vector<string> splitedSearch = {};
+    vector<string> recievedSearch = {};
+    vector<string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
     string recievedMessage = "";
-    vector <tuple<int,int>> addVector = {};
-    vector <tuple<int,int>> crossVector = {};
-    vector <string> tempTuple = {};
-    
+    vector<tuple<int, int>> addVector = {};
+    vector<string> tempTuple = {};
+
     cout << "PID PROCESO: " << getpid() << endl;
     cout << "Iniciando Buscador" << endl << endl;
     cout << "Conectando al servidor" << endl;
-    int cacheSocket = connectServer(IP_SERVER,PORT);
+    int cacheSocket = connectServer(IP_SERVER, PORT);
     sleep(1);
-    do{
-        cout << "Ingrese busqueda: ";
-        getline(cin,search);
-        
 
-        for (int i = 0; i < search.length(); i++){
-            searchNormal += tolower(search[i]); //Normaliza la entrada
+    do {
+        cout << "Ingrese búsqueda(o salir ahora para finalizar): ";
+        getline(cin, search);
+
+        // Normalizar la entrada
+        for (char c : search) {
+            searchNormal += tolower(c);
         }
-        if(searchNormal == "salir ahora") {
+
+        if (searchNormal == "salir ahora") {
             cout << "SALIENDO..." << endl;
-            sendMessage(cacheSocket,"salir_ahora");
+            sendMessage(cacheSocket, "salir_ahora");
             keepSearching = false;
             sleep(1);
-        } else{
-            
+        } else {
             cout << "BUSQ: enviando a cache: " << searchNormal << endl;
-            sendMessage(cacheSocket,searchNormal);
+            sendMessage(cacheSocket, searchNormal);
 
-            do{
+            do {
                 recievedMessage = recieveMessage(cacheSocket);
                 cout << "BUSQ: mensaje recibido: " << recievedMessage << endl;
-                if(recievedMessage != "check") recievedSearch.push_back(recievedMessage);
-            }while (recievedMessage != "check");    
+                if (recievedMessage != "check") recievedSearch.push_back(recievedMessage);
+            } while (recievedMessage != "check");
+
             print_separation();
 
-            for(string i : recievedSearch) {
-                splitedSearch = split(i,";");
+            // Concatenar las palabras clave de la búsqueda y mostrar antes de los resultados
+            string keywords;
+            for (const string& line : recievedSearch) {
+                splitedSearch = split(line, ";");
+                keywords += splitedSearch[0] + " ";  // Agrega cada palabra a la lista de palabras clave
+            }
+            cout << "Palabras clave: " << keywords << endl;
+
+            // Procesar y mostrar cada palabra y sus resultados
+            for (const string& line : recievedSearch) {
+                splitedSearch = split(line, ";");
                 cout << splitedSearch[0] << ": ";
-                if(splitedSearch[1] != "No Se encontro"){
-                    for(int j = 1; j < splitedSearch.size(); j++){
-                        splitedSearch[j] = remove_character(splitedSearch[j],'(');
-                        splitedSearch[j] = remove_character(splitedSearch[j],')');
+
+                if (splitedSearch[1] != "No Se encontró") {
+                    for (size_t j = 1; j < splitedSearch.size(); j++) {
+                        splitedSearch[j] = remove_character(splitedSearch[j], '(');
+                        splitedSearch[j] = remove_character(splitedSearch[j], ')');
                         cout << splitedSearch[j] << " | ";
-                        tempTuple = split(splitedSearch[j],",");
-                    
-                        if(addVector.size() == 0) addVector.push_back({stoi(tempTuple[0]),stoi(tempTuple[1])});
-                        else{
-                            int pos = 0;
-                            for(tuple <int,int> x : addVector){
-                                if (get<0>(x) == stoi(tempTuple[0])) {
-                                    cout << "AddVector Suma" << endl;
-                                    cout << "Valor inicial: " << get<1>(x);
-                                    int tempValue = get<1>(x) + stoi(tempTuple[1]);
-                                    get<1>(x) = tempValue;
-                                    get<1>(addVector[pos]) = get<1>(x);
-                                    cout << " | Resultado de suma: " << tempValue << " | Resultado real: " << get<1>(addVector[pos]) << endl;
-                                    break; 
-                                }
-                                else if(x == addVector.back() && get<0>(x) != stoi(tempTuple[0])) {
-                                    cout << "addVector push_back" << endl;
-                                    addVector.push_back({stoi(tempTuple[0]),stoi(tempTuple[1])});
-                                }
-                                pos++;
+                        tempTuple = split(splitedSearch[j], ",");
+
+                        // Verificación de valores válidos en tempTuple
+                        if (tempTuple.size() < 2 || tempTuple[0].empty() || tempTuple[1].empty()) {
+                            cerr << "Error: entrada inválida: " << splitedSearch[j] << endl;
+                            continue;
+                        }
+
+                        try {
+                            int idLibro = stoi(tempTuple[0]);
+                            int puntaje = stoi(tempTuple[1]);
+
+                            auto it = find_if(addVector.begin(), addVector.end(), 
+                                              [&idLibro](const tuple<int, int>& t) {
+                                                  return get<0>(t) == idLibro;
+                                              });
+                            if (it != addVector.end()) {
+                                get<1>(*it) += puntaje;
+                            } else {
+                                addVector.push_back({idLibro, puntaje});
                             }
+                        } catch (const invalid_argument& e) {
+                            cerr << "Error de conversión a entero en: " << tempTuple[0] << ", " << tempTuple[1] << endl;
+                            continue;
                         }
                     }
                     cout << endl;
                 }
             }
+
+            // Ordena addVector de mayor a menor por el puntaje y limita el resultado a `topk`
             sort(addVector.begin(), addVector.end(), [](const tuple<int, int>& a, const tuple<int, int>& b) {
-                return get<1>(a) > get<1>(b); // Ordena de mayor a menor por el puntaj
-                });
-            // Imprime las tuplas ya ordenadas
-            for (const tuple<int, int>& i : addVector) {
-                cout << "ID libro: " << get<0>(i) << " Puntaje: " << get<1>(i) << endl;
+                return get<1>(a) > get<1>(b);
+            });
+
+            int resultSize = min(topk, static_cast<int>(addVector.size()));
+            for (int i = 0; i < resultSize; ++i) {
+                cout << "ID libro: " << get<0>(addVector[i]) << " Puntaje: " << get<1>(addVector[i]) << endl;
             }
-            
-        } 
-        
-        searchNormal = ""; //Resetea la variable
+        }
+
+        searchNormal = "";
         addVector.clear();
-        
-    }while (keepSearching);
+        recievedSearch.clear();
+
+    } while (keepSearching);
 
     return 0;
 }
