@@ -45,6 +45,13 @@ Despues Setear las variables de entorno dentro del archivo .env:
   CANTIDAD_CORES='<Cantidad de cores que se quiere utilizar en procesos>'
   PROCESOS='<Direccion del archivo procesos>'
   RESULTADOS='<Direccion del archivo resultados>'
+  MEMORY_SIZE='<Tamaño máximo de la caché>'
+  CACHE_FILE='<Direccion del archivo que se utiliza para especificar la ubicación donde se almacenarán las respuestas de las consultas en la caché>'
+  IP_SERVER='<Dirección IP del servidor al que el cliente>'
+  SEARCH_PORT='<Puerto que se utilizará para que el buscador o cliente se conecte al servidor de búsqueda o motor de búsqueda>'
+  CACHE_PORT='<Puerto en el que el servidor de caché está escuchando para recibir conexiones>'
+  MOTOR_PORT='<Puerto en el que el motor de búsqueda está escuchando para recibir conexiones>'
+  TOPK='<Número máximo de resultados que el motor de búsqueda devolverá al procesar una consulta de búsqueda>'
 ```
 
 Por ultimo compilar el programa con el siguiente comando:
@@ -169,6 +176,27 @@ Donde:
 Se guarda dentro de la carpeta data
 
 
+###cache
+Se guarda como:
+
+```cmd
+cache.txt
+```
+ID es el mismo que en la seccion de arriba
+
+Dentro se ve como:
+
+```cmd
+Palabra; (ID,Cantidad).....
+```
+Donde:
+| Argumento | Descripcion |
+| -------- | ----------- |
+| Palabra | Es la palabra que se extrajo del archivo de texto |
+| Cantidad | Es la cantidad de veces que la palabra esta dentro del archivo e texto |
+|ID|Es la Id de la palabra|
+
+Se guardan dentro de la carpeta data
 
 
 ## Funciones
@@ -216,4 +244,15 @@ El programa ve si el core esta disponible y lee la informacion del archivo proce
 El programa procesa todos los archivos de una extension de una carpeta y guardar los conteos de palabras en otra carpeta.
 
 * Indice invertido:
-El programa genera un archivo con las ocurrencia de palabras en los distintos archivos de entrada
+El programa genera un archivo con las ocurrencia de palabras en los distintos archivos de entrada.
+
+* Buscador:
+El programa es el cliente de búsqueda que interactúa con el motor de búsqueda y con el caché.
+
+* Caché:
+El programa es el servidor de caché que se encarga de almacenar temporalmente los resultados de las búsquedas para que el proceso de búsqueda sea más eficiente en futuras solicitudes.
+
+* Motor de busqueda:
+El programa es el servidor de búsqueda que procesa las consultas recibidas del buscador (o del servidor de caché) y devuelve los resultados de la búsqueda, basándose en un índice invertido almacenado en el sistema.
+
+

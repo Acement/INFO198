@@ -153,7 +153,7 @@ int main() {
                 }
             }
 
-            // Ordena addVector de mayor a menor por el puntaje y limita el resultado a `topk`
+            // Ordena addVector de mayor a menor por el puntaje 
             sort(addVector.begin(), addVector.end(), [](const tuple<int, int>& a, const tuple<int, int>& b) {
                 return get<1>(a) > get<1>(b);
             });
