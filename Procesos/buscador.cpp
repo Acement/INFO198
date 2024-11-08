@@ -1,6 +1,7 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <tuple>
 
 #include "common.h"
 #include "file_operation.h"
@@ -66,6 +67,7 @@ int main(){
     */
     int PORT = std::stoi(getenv("CACHE_PORT"));
     const char* IP_SERVER = getenv("IP_SERVER"); 
+    int topk = std::stoi(getenv("TOPK"));
     
 
     
@@ -76,8 +78,11 @@ int main(){
     string searchNormal; //La frase a buscar normalizada
     vector <string> splitedSearch = {};
     vector <string> recievedSearch = {};
-    vector<string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
+    vector <string> mapa = read_file(getenv("MAPA_ARCHIVOS"));
     string recievedMessage = "";
+    vector <tuple<int,int>> addVector = {};
+    vector <tuple<int,int>> crossVector = {};
+    vector <string> tempTuple = {};
     
     cout << "PID PROCESO: " << getpid() << endl;
     cout << "Iniciando Buscador" << endl << endl;
@@ -97,8 +102,7 @@ int main(){
             sendMessage(cacheSocket,"salir_ahora");
             keepSearching = false;
             sleep(1);
-        } 
-        else{
+        } else{
             
             cout << "BUSQ: enviando a cache: " << searchNormal << endl;
             sendMessage(cacheSocket,searchNormal);
@@ -108,15 +112,53 @@ int main(){
                 cout << "BUSQ: mensaje recibido: " << recievedMessage << endl;
                 if(recievedMessage != "check") recievedSearch.push_back(recievedMessage);
             }while (recievedMessage != "check");    
-            
-        }
+            print_separation();
 
-        print_separation();
-        for(string i : recievedSearch) cout << i << endl; 
+            for(string i : recievedSearch) {
+                splitedSearch = split(i,";");
+                cout << splitedSearch[0] << ": ";
+                if(splitedSearch[1] != "No Se encontro"){
+                    for(int j = 1; j < splitedSearch.size(); j++){
+                        splitedSearch[j] = remove_character(splitedSearch[j],'(');
+                        splitedSearch[j] = remove_character(splitedSearch[j],')');
+                        cout << splitedSearch[j] << " | ";
+                        tempTuple = split(splitedSearch[j],",");
+                    
+                        if(addVector.size() == 0) addVector.push_back({stoi(tempTuple[0]),stoi(tempTuple[1])});
+                        else{
+                            int pos = 0;
+                            for(tuple <int,int> x : addVector){
+                                if (get<0>(x) == stoi(tempTuple[0])) {
+                                    cout << "AddVector Suma" << endl;
+                                    cout << "Valor inicial: " << get<1>(x);
+                                    int tempValue = get<1>(x) + stoi(tempTuple[1]);
+                                    get<1>(x) = tempValue;
+                                    get<1>(addVector[pos]) = get<1>(x);
+                                    cout << " | Resultado de suma: " << tempValue << " | Resultado real: " << get<1>(addVector[pos]) << endl;
+                                    break; 
+                                }
+                                else if(x == addVector.back() && get<0>(x) != stoi(tempTuple[0])) {
+                                    cout << "addVector push_back" << endl;
+                                    addVector.push_back({stoi(tempTuple[0]),stoi(tempTuple[1])});
+                                }
+                                pos++;
+                            }
+                        }
+                    }
+                    cout << endl;
+                }
+            }
+            for (tuple <int,int> i : addVector){
+                cout << "ID libro: " << get<0>(i) << " Puntaje: " << get<1>(i) << endl;
+            }
+            
+        }       
             /*
             Imprime resultados, podrias limpiar el recievedSearch depues de calcular el puntaje
             */
+        
         searchNormal = ""; //Resetea la variable
+        addVector.clear();
         
     }while (keepSearching);
 
