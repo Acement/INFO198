@@ -61,7 +61,6 @@ string recieveMessage(int clientSocket) {
 int main() {
     int PORT = std::stoi(getenv("CACHE_PORT"));
     const char* IP_SERVER = getenv("IP_SERVER"); 
-    int topk = std::stoi(getenv("TOPK"));
 
     bool keepSearching = true;
     string search;
@@ -118,7 +117,7 @@ int main() {
                 splitedSearch = split(line, ";");
                 cout << splitedSearch[0] << ": ";
 
-                if (splitedSearch[1] != "No Se encontró") {
+                if (splitedSearch[1] != "No Se encontro") {
                     for (size_t j = 1; j < splitedSearch.size(); j++) {
                         splitedSearch[j] = remove_character(splitedSearch[j], '(');
                         splitedSearch[j] = remove_character(splitedSearch[j], ')');
@@ -157,10 +156,10 @@ int main() {
             sort(addVector.begin(), addVector.end(), [](const tuple<int, int>& a, const tuple<int, int>& b) {
                 return get<1>(a) > get<1>(b);
             });
-
-            int resultSize = min(topk, static_cast<int>(addVector.size()));
-            for (int i = 0; i < resultSize; ++i) {
-                cout << "ID libro: " << get<0>(addVector[i]) << " Puntaje: " << get<1>(addVector[i]) << endl;
+            
+            // Eliminar la limitación de topk
+            for (const auto& result : addVector) {
+                cout << "ID libro: " << get<0>(result) << " Puntaje: " << get<1>(result) << endl;
             }
         }
 

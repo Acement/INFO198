@@ -193,8 +193,8 @@ Donde:
 | Argumento | Descripcion |
 | -------- | ----------- |
 | Palabra | Es la palabra que se extrajo del archivo de texto |
-| Cantidad | Es la cantidad de veces que la palabra esta dentro del archivo e texto |
 |ID|Es la Id de la palabra|
+| Cantidad | Es la cantidad de veces que la palabra esta dentro del archivo e texto |
 
 Se guardan dentro de la carpeta data
 
