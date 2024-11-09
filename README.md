@@ -176,7 +176,7 @@ Donde:
 Se guarda dentro de la carpeta data
 
 
-###cache
+### Cache:
 Se guarda como:
 
 ```cmd
